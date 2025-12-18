@@ -37,6 +37,7 @@ body{
   height:420px;
 }
 
+/* ===== LEVEL 2 PETALS ===== */
 .petal{
   position:absolute;
   top:50%;
@@ -56,9 +57,6 @@ body{
   cursor:pointer;
   user-select:none;
 
-  /* 🔑 DIT WAS DE MISSENDE REGEL */
-  transform:translate(var(--x),var(--y));
-
   transition:
     transform .35s ease,
     opacity .35s ease,
@@ -69,17 +67,25 @@ body{
     0 8px 18px rgba(0,0,0,.18);
 }
 
+/* Hover = alleen extra schaal */
 .petal:hover{
-  transform:translate(var(--x),var(--y)) scale(1.05);
+  transform: scale(1.05) translate(var(--tx), var(--ty));
   box-shadow:
     inset 0 3px 4px rgba(255,255,255,.3),
     0 14px 28px rgba(0,0,0,.22);
 }
 
-.petal.dim{
-  opacity:.35;
-}
+.petal.dim{ opacity:.35; }
 
+/* ===== POSITIES (HARD GECODEERD) ===== */
+.p1{ transform: translate(0px, -170px); }
+.p2{ transform: translate(150px, -85px); }
+.p3{ transform: translate(150px, 85px); }
+.p4{ transform: translate(0px, 170px); }
+.p5{ transform: translate(-150px, 85px); }
+.p6{ transform: translate(-150px, -85px); }
+
+/* ===== ZIJPANEEL ===== */
 .panel{
   width:340px;
   padding-top:40px;
@@ -128,9 +134,7 @@ body{
   font-weight:600;
 }
 
-.arrow{
-  font-size:16px;
-}
+.arrow{ font-size:16px; }
 
 .footer{
   position:absolute;
@@ -141,31 +145,6 @@ body{
   font-size:13px;
   color:#666;
   pointer-events:none;
-}
-
-/* POSITIES LEVEL 2 */
-.p1{ --x:0px;    --y:-170px; }
-.p2{ --x:150px;  --y:-85px; }
-.p3{ --x:150px;  --y:85px; }
-.p4{ --x:0px;    --y:170px; }
-.p5{ --x:-150px; --y:85px; }
-.p6{ --x:-150px; --y:-85px; }
-
-@media (max-width:900px){
-  .wrapper{
-    flex-direction:column;
-    width:100%;
-    height:auto;
-    gap:20px;
-  }
-  .panel{
-    width:100%;
-  }
-  .footer{
-    position:relative;
-    bottom:auto;
-    margin-top:12px;
-  }
 }
 </style>
 </head>
@@ -194,6 +173,11 @@ body{
 
 <script>
 const data = {
+  migreren: [
+    ["Emigratie","https://infofrankrijk.com/categorie/emigratie/"],
+    ["Remigratie","https://infofrankrijk.com/categorie/remigratie/"],
+    ["Overheden","https://infofrankrijk.com/categorie/overheden/"]
+  ],
   wonen: [
     ["Wonen in Frankrijk","https://infofrankrijk.com/categorie/wonen-in-frankrijk/"],
     ["Vastgoed","https://infofrankrijk.com/categorie/vastgoed/"],
@@ -217,24 +201,19 @@ const data = {
     ["Planning & regels","https://infofrankrijk.com/categorie/planning-regels/"],
     ["Techniek & installatie","https://infofrankrijk.com/categorie/techniek-installatie/"],
     ["Constructie","https://infofrankrijk.com/categorie/constructie/"]
-  ],
-  migreren: [
-    ["Emigratie","https://infofrankrijk.com/categorie/emigratie/"],
-    ["Remigratie","https://infofrankrijk.com/categorie/remigratie/"],
-    ["Overheden","https://infofrankrijk.com/categorie/overheden/"]
   ]
 };
 
-const petals = document.querySelectorAll('.petal');
-const panel = document.getElementById('panel');
-const list = document.getElementById('panel-list');
-const title = document.getElementById('panel-title');
+const petals=document.querySelectorAll('.petal');
+const panel=document.getElementById('panel');
+const list=document.getElementById('panel-list');
+const title=document.getElementById('panel-title');
 
 petals.forEach(p=>{
   p.addEventListener('click',()=>{
     const k=p.dataset.k;
-    petals.forEach(o=>o.classList.toggle('dim', o!==p));
-    title.textContent = p.textContent;
+    petals.forEach(o=>o.classList.toggle('dim',o!==p));
+    title.textContent=p.textContent;
     list.innerHTML='';
     panel.classList.add('active');
 
@@ -242,7 +221,7 @@ petals.forEach(p=>{
       const li=document.createElement('li');
       li.innerHTML=`<a href="${item[1]}" target="_top">${item[0]}</a><span class="arrow">➡️</span>`;
       list.appendChild(li);
-      setTimeout(()=>li.classList.add('show'), 120 + i*70);
+      setTimeout(()=>li.classList.add('show'),120+i*70);
     });
   });
 });
