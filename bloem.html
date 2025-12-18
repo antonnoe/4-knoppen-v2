@@ -8,8 +8,9 @@
 <style>
 :root{
   --rood:#800000;
-  --rood-licht:rgba(128,0,0,.28);
-  --schaduw:0 14px 34px rgba(0,0,0,.18);
+  --rood-licht:rgba(128,0,0,.22);
+  --border:rgba(0,0,0,.06);
+  --shadow:0 18px 48px rgba(0,0,0,.18);
 }
 
 *{box-sizing:border-box}
@@ -17,41 +18,42 @@
 html,body{
   margin:0;
   font-family:Mulish,system-ui,sans-serif;
-  background:#f5f5f5;
+  background:transparent;
 }
 
-/* OVERLAY (sluiten = klik buiten) */
+/* OVERLAY: vlak, geen "extra kader" gevoel */
 .overlay{
   position:fixed;
   inset:0;
-  background:rgba(255,255,255,.94);
+  background:rgba(255,255,255,.92);
   display:flex;
   justify-content:center;
   align-items:center;
   z-index:9999;
 }
 
-/* HOOFDPANEEL */
+/* ÉÉN paneel */
 .panel{
   position:relative;
   width:94vw;
   max-width:1200px;
   height:78vh;
   background:#fff;
-  border-radius:26px;
-  box-shadow:0 22px 52px rgba(0,0,0,.2);
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
   overflow:hidden;
 }
 
-/* LAYOUT */
+/* Layout */
 .layout{
   display:flex;
   height:100%;
   padding:40px;
-  gap:40px;
+  gap:44px;
 }
 
-/* BLOEM – VISUEEL ANKER */
+/* Bloem */
 .bloem-wrap{
   position:relative;
   width:48%;
@@ -59,7 +61,7 @@ html,body{
   display:flex;
   justify-content:center;
   align-items:center;
-  overflow:visible; reminding
+  overflow:visible; /* mag uitsteken, maar blijft binnen paneel door geometrie */
 }
 
 .bloem{
@@ -68,14 +70,14 @@ html,body{
   height:420px;
 }
 
-/* PETALS – STATISCH GEPLAATST */
+/* Petals: GEEN hover, alleen click */
 .petal{
   position:absolute;
   width:120px;
   height:120px;
   border-radius:50%;
   background:var(--rood-licht);
-  color:#fff;
+  color:var(--rood);                 /* inactief: tekst #800000 */
   font-family:Poppins,system-ui,sans-serif;
   font-weight:700;
   display:flex;
@@ -83,17 +85,19 @@ html,body{
   justify-content:center;
   text-align:center;
   cursor:pointer;
-  box-shadow:var(--schaduw);
-  transition:background .25s ease, transform .25s ease, box-shadow .25s ease;
+  user-select:none;
+  box-shadow:0 14px 34px rgba(0,0,0,.14);
+  transition:background .22s ease, color .22s ease, transform .22s ease, box-shadow .22s ease;
 }
 
 .petal.active{
-  background:var(--rood);
+  background:var(--rood);            /* actief: vol #800000 */
+  color:#fff;                        /* actief: wit */
   transform:scale(1.06);
-  box-shadow:0 18px 40px rgba(0,0,0,.28);
+  box-shadow:0 18px 42px rgba(0,0,0,.22);
 }
 
-/* vaste geometrie (geen transform-animatie voor positie) */
+/* Vaste geometrie (geen transform-positionering) */
 .p1{top:-10px; left:150px}
 .p2{top:80px; right:-10px}
 .p3{bottom:80px; right:-10px}
@@ -101,7 +105,7 @@ html,body{
 .p5{bottom:80px; left:-10px}
 .p6{top:80px; left:-10px}
 
-/* ZIJPANEEL – ENIGE DYNAMIEK */
+/* Side panel */
 .side{
   width:52%;
   display:flex;
@@ -113,7 +117,8 @@ html,body{
   margin:0 0 24px;
   font-family:Poppins,system-ui,sans-serif;
   color:var(--rood);
-  font-size:28px;
+  font-size:30px;
+  line-height:1.1;
 }
 
 .links{
@@ -129,12 +134,12 @@ html,body{
   padding:16px 20px;
   border-radius:14px;
   border:1px solid #eee;
-  font-weight:600;
+  font-weight:700;
   color:var(--rood);
   background:#fff;
   opacity:0;
-  transform:translateY(8px);
-  animation:fadeUp .45s ease forwards;
+  transform:translateY(8px);          /* enige animatie (paneel) */
+  animation:fadeUp .42s ease forwards;
 }
 
 .link:nth-child(2){animation-delay:.06s}
@@ -151,31 +156,32 @@ html,body{
   border-radius:10px;
   padding:8px 12px;
   text-decoration:none;
-  font-weight:700;
+  font-weight:800;
 }
 
-/* FOOTER HINT */
-.footer{
-  position:absolute;
-  left:0; right:0; bottom:0;
-  height:54px;
-  background:var(--rood);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
+/* Kleine schermen: onder elkaar */
+@media (max-width: 980px){
+  .panel{height:auto; max-height:88vh; overflow:auto}
+  .layout{flex-direction:column; padding:28px}
+  .bloem-wrap{width:100%; min-width:0}
+  .side{width:100%; padding-top:6px}
+  .bloem{width:360px; height:360px}
+  .petal{width:108px; height:108px}
+  .p1{top:-8px; left:126px}
+  .p2{top:70px; right:-8px}
+  .p3{bottom:70px; right:-8px}
+  .p4{bottom:-8px; left:126px}
+  .p5{bottom:70px; left:-8px}
+  .p6{top:70px; left:-8px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="overlay" id="overlay">
   <div class="panel" id="panel">
     <div class="layout">
-
-      <div class="bloem-wrap">
+      <div class="bloem-wrap" id="bloemArea">
         <div class="bloem">
           <div class="petal p1" data-key="wonen">Wonen</div>
           <div class="petal p2" data-key="leven">Leven</div>
@@ -186,15 +192,10 @@ html,body{
         </div>
       </div>
 
-      <div class="side">
+      <div class="side" id="side">
         <h2 id="titel">Kies een thema</h2>
         <div class="links" id="links"></div>
       </div>
-
-    </div>
-
-    <div class="footer">
-      Klik buiten de bloem om te sluiten
     </div>
   </div>
 </div>
@@ -232,33 +233,37 @@ const data={
   ]
 };
 
-const petals=document.querySelectorAll(".petal");
+const petals=[...document.querySelectorAll(".petal")];
 const links=document.getElementById("links");
 const titel=document.getElementById("titel");
+
+function renderLinks(key, label){
+  titel.textContent=label;
+  links.innerHTML="";
+  (data[key]||[]).forEach(([t,u], idx)=>{
+    const d=document.createElement("div");
+    d.className="link";
+    d.style.animationDelay=(idx*0.06)+"s";
+    d.innerHTML=`${t}<a class="go" href="${u}" target="_blank" rel="noopener">→</a>`;
+    links.appendChild(d);
+  });
+}
 
 petals.forEach(p=>{
   p.addEventListener("click",()=>{
     petals.forEach(x=>x.classList.remove("active"));
     p.classList.add("active");
-    titel.textContent=p.textContent;
-    links.innerHTML="";
-    data[p.dataset.key].forEach(([t,u])=>{
-      const d=document.createElement("div");
-      d.className="link";
-      d.innerHTML=`${t}<a class="go" href="${u}" target="_blank" rel="noopener">→</a>`;
-      links.appendChild(d);
-    });
+    renderLinks(p.dataset.key, p.textContent);
   });
 });
 
-/* sluiten = klik buiten bloem */
-document.getElementById("overlay").addEventListener("click",e=>{
-  const bloem=document.querySelector(".bloem-wrap");
-  if(!bloem.contains(e.target)){
+/* Sluiten: klik buiten de bloem (geen kruisjes) */
+document.getElementById("overlay").addEventListener("click", (e)=>{
+  const bloemArea=document.getElementById("bloemArea");
+  if(!bloemArea.contains(e.target)){
     document.getElementById("overlay").style.display="none";
   }
 });
 </script>
-
 </body>
 </html>
