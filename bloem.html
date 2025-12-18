@@ -6,6 +6,7 @@
 <title>Infofrankrijk – Wegwijzer</title>
 
 <style>
+/* ===== BASIS ===== */
 body{
   margin:0;
   background:transparent;
@@ -21,25 +22,28 @@ body{
   justify-content:center;
 }
 
+/* ===== WRAPPER MET FOOTER-ZONE ===== */
 #flower-wrapper{
   position:relative;
-  width:500px;
-  height:560px;
+  width:640px;
+  height:520px;
   display:flex;
   flex-direction:column;
   align-items:center;
+  justify-content:flex-start;
 }
 
+/* ===== BLOEM (ELLIPS) ===== */
 #flower{
   position:relative;
-  width:500px;
-  height:500px;
+  width:640px;
+  height:420px; /* bovenruimte */
   opacity:0;
-  transform:scale(.92);
+  transform:scale(.95);
   transition:opacity .6s ease, transform .6s ease;
 }
 
-/* ===== BASIS CIRKELS ===== */
+/* ===== ALGEMENE CIRKELS ===== */
 .petal{
   position:absolute;
   top:50%;
@@ -53,26 +57,27 @@ body{
   font-weight:700;
   cursor:pointer;
   user-select:none;
-  transition:opacity .4s ease, transform .45s ease;
+  transition:opacity .35s ease, transform .45s ease;
 }
 
-/* ===== LEVEL 2 ===== */
+/* ===== LEVEL 2 (KLEINER) ===== */
 .primary{
-  width:130px;
-  height:130px;
-  font-size:16px;
+  width:112px;
+  height:112px;
+  font-size:15px;
   background:#800000;
   color:#fff;
   border:2px solid #800000;
-  z-index:3;
+  z-index:2;
 
+  /* horizontaal ovaal */
   transform:
     rotate(var(--a))
-    translate(170px)
+    translateX(210px)
     rotate(calc(-1 * var(--a)));
 }
 
-/* ===== LEVEL 3 – ECHT NAAR BINNEN ===== */
+/* ===== LEVEL 3 (NAAR BUITEN, MAAR BEGRENSD) ===== */
 .secondary{
   width:96px;
   height:96px;
@@ -82,12 +87,11 @@ body{
   color:#800000;
   opacity:0;
   pointer-events:none;
-  z-index:2;
+  z-index:3; /* altijd boven level 2 */
 
-  /* start diep naar binnen */
   transform:
     rotate(var(--a))
-    translate(80px)
+    translateX(240px)
     rotate(calc(-1 * var(--a)));
 }
 
@@ -95,10 +99,9 @@ body{
   opacity:1;
   pointer-events:auto;
 
-  /* eindpositie: BINNEN RING */
   transform:
     rotate(var(--a))
-    translate(115px)
+    translateX(300px)  /* max radius binnen vlak */
     rotate(calc(-1 * var(--a)));
 }
 
@@ -111,13 +114,45 @@ body{
   font-size:14px;
 }
 
-/* hint */
+/* ===== FOOTER ===== */
 #close-hint{
-  margin-top:10px;
+  margin-top:14px;
   font-size:13px;
   color:#666;
   text-align:center;
   pointer-events:none;
+}
+
+/* ===== MOBIEL ===== */
+@media (max-width:680px){
+  #flower-wrapper{
+    width:100%;
+    height:480px;
+  }
+  #flower{
+    width:100%;
+    height:380px;
+  }
+  .primary{
+    width:100px;
+    height:100px;
+    font-size:14px;
+    transform:
+      rotate(var(--a))
+      translateX(170px)
+      rotate(calc(-1 * var(--a)));
+  }
+  .secondary{
+    width:88px;
+    height:88px;
+    font-size:12px;
+  }
+  .secondary.active{
+    transform:
+      rotate(var(--a))
+      translateX(230px)
+      rotate(calc(-1 * var(--a)));
+  }
 }
 </style>
 </head>
@@ -137,9 +172,9 @@ body{
       <div class="petal primary" data-k="migreren"  style="--a:300deg;">Migreren</div>
 
       <!-- WONEN -->
-      <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/wonen-in-frankrijk/" style="--a:330deg;">Wonen</a>
+      <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/wonen-in-frankrijk/" style="--a:0deg;">Wonen</a>
       <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/vastgoed/" style="--a:30deg;">Vastgoed</a>
-      <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/huisje-boompje-beestje/" style="--a:90deg;">Huisje<br>boompje</a>
+      <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/huisje-boompje-beestje/" style="--a:90deg;">Huisje</a>
       <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/cultuur-info/" style="--a:150deg;">Cultuur</a>
 
       <!-- LEVEN -->
@@ -151,19 +186,19 @@ body{
       <a class="petal secondary" data-p="leren" href="https://infofrankrijk.com/categorie/onderwijs-cursussen/" style="--a:120deg;">Onderwijs</a>
 
       <!-- WERKEN -->
-      <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/arbeidsmarkt/" style="--a:210deg;">Arbeid</a>
-      <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/ondernemen/" style="--a:180deg;">Ondernemen</a>
+      <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/arbeidsmarkt/" style="--a:180deg;">Arbeid</a>
+      <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/ondernemen/" style="--a:210deg;">Ondernemen</a>
       <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/toerisme-sector/" style="--a:150deg;">Toerisme</a>
 
       <!-- VERBOUWEN -->
-      <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/planning-regels/" style="--a:270deg;">Planning</a>
-      <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/techniek-installatie/" style="--a:240deg;">Techniek</a>
+      <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/planning-regels/" style="--a:240deg;">Planning</a>
+      <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/techniek-installatie/" style="--a:270deg;">Techniek</a>
       <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/constructie/" style="--a:210deg;">Constructie</a>
 
       <!-- MIGREREN -->
-      <a class="petal secondary" data-p="migreren" href="https://infofrankrijk.com/categorie/overheden/" style="--a:330deg;">Overheden</a>
       <a class="petal secondary" data-p="migreren" href="https://infofrankrijk.com/categorie/emigratie/" style="--a:300deg;">Emigratie</a>
       <a class="petal secondary" data-p="migreren" href="https://infofrankrijk.com/categorie/remigratie/" style="--a:270deg;">Remigratie</a>
+      <a class="petal secondary" data-p="migreren" href="https://infofrankrijk.com/categorie/overheden/" style="--a:330deg;">Overheden</a>
 
     </div>
 
