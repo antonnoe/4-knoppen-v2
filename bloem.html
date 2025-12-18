@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Infofrankrijk – Navigatiebloem</title>
+<title>Infofrankrijk – Navigatie</title>
 
 <style>
 :root{
   --rood:#800000;
-  --rood-licht:rgba(128,0,0,.28);
+  --rood-licht:rgba(128,0,0,.30);
 }
 
 *{box-sizing:border-box}
@@ -16,17 +16,16 @@
 body{
   margin:0;
   font-family: Mulish, system-ui, sans-serif;
-  background:transparent;
 }
 
 /* OVERLAY */
 .overlay{
   position:fixed;
   inset:0;
-  background:rgba(255,255,255,.96);
+  background:rgba(255,255,255,.94);
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   z-index:9999;
 }
 
@@ -36,86 +35,84 @@ body{
   width:92vw;
   max-width:1200px;
   height:80vh;
-  background:rgba(255,255,255,.92);
-  border-radius:28px;
-  box-shadow:0 20px 60px rgba(0,0,0,.18);
-  padding:40px;
+  background:white;
+  border-radius:26px;
+  box-shadow:0 20px 50px rgba(0,0,0,.18);
   overflow:hidden;
 }
 
-/* SLUITEN */
+/* SLUITKNOP – ENKEL DEZE */
 .close{
   position:absolute;
-  top:18px;
-  right:18px;
-  width:40px;
-  height:40px;
+  top:16px;
+  right:16px;
+  width:36px;
+  height:36px;
   border-radius:50%;
   border:2px solid var(--rood);
-  color:var(--rood);
-  font-size:22px;
   background:white;
+  color:var(--rood);
+  font-size:20px;
   cursor:pointer;
+  z-index:10;
 }
 
-/* BLOEM + ZIJPANEEL */
+/* LAYOUT */
 .layout{
   display:flex;
   height:100%;
+  padding:40px;
+  padding-bottom:80px;
 }
 
 /* BLOEM */
 .bloem{
-  position:relative;
-  width:55%;
+  width:50%;
   min-width:420px;
+  position:relative;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
 }
 
-/* PETALS LEVEL 2 */
+/* PETALS */
 .petal{
   position:absolute;
-  width:150px;
-  height:150px;
+  width:120px;
+  height:120px;
   border-radius:50%;
-  background:var(--rood);
+  background:var(--rood-licht);
   color:white;
   font-weight:700;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   cursor:pointer;
-  transition:
-    transform .6s ease,
-    opacity .4s ease,
-    box-shadow .4s ease;
-  box-shadow:0 14px 30px rgba(0,0,0,.25);
+  transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
 }
 
-.petal.inactive{
-  background:var(--rood-licht);
-  color:white;
-  box-shadow:0 8px 18px rgba(0,0,0,.15);
+.petal:hover{
+  transform:scale(1.04);
 }
 
 .petal.active{
-  z-index:5;
-  transform:translate(0,0) scale(1.05);
+  background:var(--rood);
+  box-shadow:0 14px 30px rgba(0,0,0,.28);
+  transform:scale(1.08);
 }
 
-/* POSITIES (ovaal) */
-.p1{transform:translate(0,-190px)}
-.p2{transform:translate(170px,-95px)}
-.p3{transform:translate(170px,95px)}
-.p4{transform:translate(0,190px)}
-.p5{transform:translate(-170px,95px)}
-.p6{transform:translate(-170px,-95px)}
+/* POSITIES (ovaal, stabiel) */
+.p1{transform:translate(0,-160px)}
+.p2{transform:translate(150px,-80px)}
+.p3{transform:translate(150px,80px)}
+.p4{transform:translate(0,160px)}
+.p5{transform:translate(-150px,80px)}
+.p6{transform:translate(-150px,-80px)}
 
 /* ZIJPANEEL */
 .side{
-  width:45%;
+  width:50%;
   padding-left:40px;
   display:flex;
   flex-direction:column;
@@ -125,11 +122,11 @@ body{
 .side h2{
   font-family:Poppins, sans-serif;
   color:var(--rood);
-  margin:0 0 20px 0;
   font-size:28px;
+  margin:0 0 24px;
 }
 
-/* LEVEL 3 */
+/* LINKS */
 .links{
   display:flex;
   flex-direction:column;
@@ -147,15 +144,15 @@ body{
   color:var(--rood);
   background:white;
   opacity:0;
-  transform:translateX(20px);
-  animation:in .5s ease forwards;
+  transform:translateX(16px);
+  animation:fadeIn .4s ease forwards;
 }
 
-.link:nth-child(2){animation-delay:.08s}
-.link:nth-child(3){animation-delay:.16s}
-.link:nth-child(4){animation-delay:.24s}
+.link:nth-child(2){animation-delay:.06s}
+.link:nth-child(3){animation-delay:.12s}
+.link:nth-child(4){animation-delay:.18s}
 
-@keyframes in{
+@keyframes fadeIn{
   to{opacity:1;transform:none}
 }
 
@@ -177,11 +174,11 @@ body{
   background:var(--rood);
   color:white;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   font-size:14px;
-  border-bottom-left-radius:28px;
-  border-bottom-right-radius:28px;
+  border-bottom-left-radius:26px;
+  border-bottom-right-radius:26px;
 }
 </style>
 </head>
@@ -189,11 +186,11 @@ body{
 <body>
 
 <div class="overlay" id="overlay">
-  <div class="panel">
+  <div class="panel" id="panel">
     <button class="close" onclick="closeAll()">×</button>
 
     <div class="layout">
-      <div class="bloem" id="bloem">
+      <div class="bloem">
         <div class="petal p1" data-key="wonen">Wonen</div>
         <div class="petal p2" data-key="leven">Leven</div>
         <div class="petal p3" data-key="leren">Leren</div>
@@ -252,13 +249,9 @@ const links=document.getElementById("links");
 const titel=document.getElementById("titel");
 
 petals.forEach(p=>{
-  p.onclick=()=>{
-    petals.forEach(x=>{
-      x.classList.remove("active");
-      x.classList.add("inactive");
-    });
+  p.addEventListener("click",()=>{
+    petals.forEach(x=>x.classList.remove("active"));
     p.classList.add("active");
-    p.classList.remove("inactive");
 
     titel.textContent=p.textContent;
     links.innerHTML="";
@@ -269,12 +262,14 @@ petals.forEach(p=>{
       d.innerHTML=`${t}<a class="go" href="${u}" target="_blank">→</a>`;
       links.appendChild(d);
     });
-  };
+  });
 });
 
-/* sluit bij klik buiten bloem */
+/* klik buiten panel sluit */
 document.getElementById("overlay").addEventListener("click",e=>{
-  if(e.target.id==="overlay") closeAll();
+  if(!document.getElementById("panel").contains(e.target)){
+    closeAll();
+  }
 });
 
 function closeAll(){
