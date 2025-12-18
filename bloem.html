@@ -161,40 +161,45 @@ body{
 </div>
 </div>
 
+
 <script>
-const data={
-  migreren:[
-    ["Emigratie","https://infofrankrijk.com/categorie/emigratie/"],
-    ["Remigratie","https://infofrankrijk.com/categorie/remigratie/"],
-    ["Overheden","https://infofrankrijk.com/categorie/overheden/"]
+const data = {
+  wonen: [
+    ["Wonen in Frankrijk", "https://infofrankrijk.com/categorie/wonen-in-frankrijk/"],
+    ["Vastgoed", "https://infofrankrijk.com/categorie/vastgoed/"],
+    ["Huisje, boompje & beestje", "https://infofrankrijk.com/categorie/huisje-boompje-beestje/"],
+    ["Cultuur & info", "https://infofrankrijk.com/categorie/cultuur-info/"]
+  ],
+
+  leven: [
+    ["Zorg & welzijn", "https://infofrankrijk.com/categorie/zorg-welzijn/"],
+    ["Geldzaken & belasting", "https://infofrankrijk.com/categorie/geldzaken-belasting/"],
+    ["Juridisch & familie", "https://infofrankrijk.com/categorie/juridisch-familie/"]
+  ],
+
+  leren: [
+    ["Onderwijs & cursussen", "https://infofrankrijk.com/categorie/onderwijs-cursussen/"]
+  ],
+
+  werken: [
+    ["Arbeidsmarkt", "https://infofrankrijk.com/categorie/arbeidsmarkt/"],
+    ["Ondernemen", "https://infofrankrijk.com/categorie/ondernemen/"],
+    ["Toerisme", "https://infofrankrijk.com/categorie/toerisme-sector/"]
+  ],
+
+  verbouwen: [
+    ["Planning & regels", "https://infofrankrijk.com/categorie/planning-regels/"],
+    ["Techniek & installatie", "https://infofrankrijk.com/categorie/techniek-installatie/"],
+    ["Constructie", "https://infofrankrijk.com/categorie/constructie/"]
+  ],
+
+  migreren: [
+    ["Emigratie", "https://infofrankrijk.com/categorie/emigratie/"],
+    ["Remigratie", "https://infofrankrijk.com/categorie/remigratie/"],
+    ["Overheden", "https://infofrankrijk.com/categorie/overheden/"]
   ]
 };
 
-const petals=document.querySelectorAll('.petal');
-const panel=document.getElementById('panel');
-const list=document.getElementById('panel-list');
-const title=document.getElementById('panel-title');
-
-petals.forEach(p=>{
-  p.addEventListener('click',()=>{
-    petals.forEach(o=>{
-      o.classList.toggle('dim',o!==p);
-      o.classList.toggle('active',o===p);
-    });
-
-    const k=p.dataset.k;
-    title.textContent=p.textContent;
-    list.innerHTML='';
-    panel.classList.add('active');
-
-    (data[k]||[]).forEach((item,i)=>{
-      const li=document.createElement('li');
-      li.innerHTML=`<a href="${item[1]}" target="_top">${item[0]}</a> ➡️`;
-      list.appendChild(li);
-      setTimeout(()=>li.classList.add('show'),120+i*80);
-    });
-  });
-});
 </script>
 </body>
 </html>
