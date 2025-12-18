@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infofrankrijk – Wegwijzer</title>
+
+<style>
+body{ margin:0; background:transparent; font-family:Mulish,Arial,sans-serif; }
+.stage{ width:100%; height:100vh; display:flex; align-items:center; justify-content:center; }
+
+#flower{
+  position:relative; width:620px; height:620px;
+  opacity:0; transform:scale(.9);
+  transition:opacity .7s ease, transform .7s ease;
+}
+
+.petal{
+  position:absolute; top:50%; left:50%;
+  width:150px; height:150px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; font-family:Poppins,Arial,sans-serif; font-size:16px;
+  cursor:pointer; text-decoration:none; user-select:none;
+  transition:background .4s ease, color .4s ease, opacity .6s ease, transform .6s ease;
+  transform:rotate(var(--a)) translate(220px) rotate(calc(-1 * var(--a)));
+}
+
+/* niveau 2 */
+.primary{
+  background:rgba(128,0,0,.15);
+  border:2px solid rgba(128,0,0,.9);
+  color:#800000;
+}
+.primary:hover{ background:rgba(128,0,0,.25); }
+
+/* niveau 3 */
+.secondary{
+  background:rgba(128,0,0,.10);
+  border:2px solid rgba(128,0,0,.45);
+  color:#800000;
+  opacity:0; pointer-events:none;
+  transform:rotate(var(--a)) translate(150px) rotate(calc(-1 * var(--a)));
+}
+.secondary.active{
+  opacity:1; pointer-events:auto;
+  transform:rotate(var(--a)) translate(360px) rotate(calc(-1 * var(--a)));
+}
+.secondary::after{
+  content:"↗"; position:absolute; top:12px; right:14px; font-size:13px; opacity:.6;
+}
+.secondary:hover{ background:rgba(128,0,0,.22); }
+
+@media (max-width:520px){
+  #flower{ width:520px; height:520px; }
+  .petal{ width:132px; height:132px; font-size:15px;
+          transform:rotate(var(--a)) translate(185px) rotate(calc(-1 * var(--a))); }
+  .secondary{ transform:rotate(var(--a)) translate(135px) rotate(calc(-1 * var(--a))); }
+  .secondary.active{ transform:rotate(var(--a)) translate(300px) rotate(calc(-1 * var(--a))); }
+}
+</style>
+</head>
+
+<body>
+<div class="stage">
+  <div id="flower">
+    <!-- niveau 2 -->
+    <div class="petal primary" data-k="wonen"    style="--a:0deg;">Wonen</div>
+    <div class="petal primary" data-k="leven"    style="--a:60deg;">Leven</div>
+    <div class="petal primary" data-k="leren"    style="--a:120deg;">Leren</div>
+    <div class="petal primary" data-k="werken"   style="--a:180deg;">Werken</div>
+    <div class="petal primary" data-k="verbouwen"style="--a:240deg;">Verbouwen</div>
+    <div class="petal primary" data-k="migreren" style="--a:300deg;">Migreren</div>
+
+    <!-- Wonen -->
+    <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/wonen-in-frankrijk/" style="--a:330deg;">Wonen in Frankrijk</a>
+    <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/vastgoed/" style="--a:30deg;">Vastgoed</a>
+    <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/huisje-boompje-beestje/" style="--a:90deg;">Huisje, boompje &amp; beestje</a>
+    <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/cultuur-info/" style="--a:150deg;">Cultuur &amp; info</a>
+
+    <!-- Leven -->
+    <a class="petal secondary" data-p="leven" href="https://infofrankrijk.com/categorie/zorg-welzijn/" style="--a:330deg;">Zorg &amp; welzijn</a>
+    <a class="petal secondary" data-p="leven" href="https://infofrankrijk.com/categorie/geldzaken-belasting/" style="--a:30deg;">Geldzaken &amp; belasting</a>
+    <a class="petal secondary" data-p="leven" href="https://infofrankrijk.com/categorie/juridisch-familie/" style="--a:90deg;">Juridisch &amp; familie</a>
+
+    <!-- Leren -->
+    <a class="petal secondary" data-p="leren" href="https://infofrankrijk.com/categorie/onderwijs-cursussen/" style="--a:120deg;">Onderwijs &amp; cursussen</a>
+
+    <!-- Werken -->
+    <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/arbeidsmarkt/" style="--a:210deg;">Arbeidsmarkt</a>
+    <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/ondernemen/" style="--a:180deg;">Ondernemen</a>
+    <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/toerisme-sector/" style="--a:150deg;">Toerismesector</a>
+
+    <!-- Verbouwen -->
+    <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/planning-regels/" style="--a:270deg;">Planning &amp; regels</a>
+    <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/techniek-installatie/" style="--a:240deg;">Techniek &amp; installatie</a>
+    <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/constructie/" style="--a:210deg;">Constructie</a>
+
+    <!-- Migreren -->
+    <a class="petal secondary" data-p="migreren" href="https://infofrankrijk.com/categorie/overheden/" style="--a:330deg;">Overheden</a>
+    <a class="petal secondary" data-p="migreren" href="https://infofrankrijk.com/categorie/emigratie/" style="--a:300deg;">Emigratie</a>
+    <a class="petal secondary" data-p="migreren" href="https://infofrankrijk.com/categorie/remigratie/" style="--a:270deg;">Remigratie</a>
+  </div>
+</div>
+
+<script>
+const flower=document.getElementById('flower');
+const prim=[...document.querySelectorAll('.primary')];
+const sec =[...document.querySelectorAll('.secondary')];
+
+setTimeout(()=>{ flower.style.opacity='1'; flower.style.transform='scale(1)'; },60);
+
+prim.forEach(p=>{
+  p.addEventListener('click',()=>{
+    const k=p.dataset.k;
+    sec.forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll(`[data-p="${k}"]`).forEach(s=>s.classList.add('active'));
+  });
+});
+
+sec.forEach(s=>{
+  s.addEventListener('click',e=>{
+    e.preventDefault();
+    window.top.location.href=s.getAttribute('href');
+  });
+});
+</script>
+</body>
+</html>
