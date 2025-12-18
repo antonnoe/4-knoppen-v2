@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forum Knoppen</title>
+
+<style>
+body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif; }
+.action-buttons-container{ display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; padding:5px 0; }
+.button-group{ display:flex; align-items:center; gap:6px; }
+
+.main-button{
+  display:inline-block;
+  background:#e8e0e0;
+  color:#800000;
+  padding:4px 8px;
+  border-radius:8px;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:600;
+  border:2px solid #800000;
+}
+.help-trigger{
+  display:flex; justify-content:center; align-items:center;
+  width:18px; height:18px;
+  background:#800000; color:#fff;
+  border-radius:50%;
+  font-weight:bold; cursor:pointer;
+  font-size:12px; text-decoration:none;
+}
+
+/* overlay + iframe */
+#if-overlay{
+  position:fixed; inset:0;
+  background:rgba(255,255,255,.70);
+  backdrop-filter:blur(2px);
+  display:none; align-items:center; justify-content:center;
+  z-index:9999;
+}
+#if-shell{
+  width:min(980px,92vw);
+  height:min(760px,90vh);
+  background:transparent;
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.18);
+  position:relative;
+  overflow:hidden;
+}
+#if-close{
+  position:absolute; top:10px; right:10px;
+  width:34px; height:34px;
+  border-radius:999px;
+  border:2px solid rgba(128,0,0,.35);
+  background:rgba(255,255,255,.85);
+  color:#800000;
+  font-weight:700;
+  cursor:pointer;
+  line-height:30px;
+}
+#if-frame{ width:100%; height:100%; border:0; background:transparent; }
+</style>
+
+<script>
+function openUitleg(url){
+  window.open(url,'UitlegVenster','width=550,height=350,scrollbars=no,resizable=yes');
+}
+
+function openFlower(){
+  const ov=document.getElementById('if-overlay');
+  const fr=document.getElementById('if-frame');
+  fr.src='bloem.html';           // iframe-target in dezelfde repo
+  ov.style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closeFlower(){
+  const ov=document.getElementById('if-overlay');
+  const fr=document.getElementById('if-frame');
+  ov.style.display='none';
+  document.body.style.overflow='';
+  fr.src='about:blank';          // ontladen
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeFlower(); });
+</script>
+</head>
+
+<body>
+<div class="action-buttons-container">
+  <div class="button-group">
+    <a href="https://www.nederlanders.fr/profiles/blog/new" target="_blank" rel="noopener" class="main-button">PLAATS BERICHT</a>
+    <a href="javascript:void(0);" onclick="openUitleg('uitleg-berichten.html')" class="help-trigger">?</a>
+  </div>
+  <div class="button-group">
+    <a href="https://www.nederlanders.fr/page/betaalpagina-berichten" target="_blank" rel="noopener" class="main-button">PLAATS ADVERTENTIE</a>
+    <a href="javascript:void(0);" onclick="openUitleg('uitleg-advertentie.html')" class="help-trigger">?</a>
+  </div>
+  <div class="button-group">
+    <a href="https://www.nederlanders.fr/page/lift-en-transportcentrale" target="_blank" rel="noopener" class="main-button">VERVOERSHUB</a>
+    <a href="javascript:void(0);" onclick="openUitleg('uitleg-vervoershub.html')" class="help-trigger">?</a>
+  </div>
+  <!-- INFOFRANKRIJK (v2) -->
+  <div class="button-group">
+    <a href="https://www.infofrankrijk.com" class="main-button"
+       onclick="event.preventDefault(); openFlower();">INFOFRANKRIJK</a>
+    <a href="javascript:void(0);" onclick="openUitleg('uitleg-infofrankrijk.html')" class="help-trigger">?</a>
+  </div>
+</div>
+
+<!-- overlay -->
+<div id="if-overlay" onclick="if(event.target.id==='if-overlay'){ closeFlower(); }">
+  <div id="if-shell">
+    <button id="if-close" onclick="closeFlower()" aria-label="Sluiten">×</button>
+    <iframe id="if-frame" src="about:blank" title="Infofrankrijk bloem"></iframe>
+  </div>
+</div>
+</body>
+</html>
