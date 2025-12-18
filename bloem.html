@@ -37,7 +37,6 @@ body{
   height:420px;
 }
 
-/* ===== LEVEL 2 PETALS ===== */
 .petal{
   position:absolute;
   top:50%;
@@ -57,19 +56,15 @@ body{
   cursor:pointer;
   user-select:none;
 
-  transition:
-    transform .35s ease,
-    opacity .35s ease,
-    box-shadow .35s ease;
+  transform: translate(var(--x), var(--y));
+  transition: transform .45s ease, opacity .3s ease, box-shadow .3s ease;
 
   box-shadow:
     inset 0 2px 3px rgba(255,255,255,.25),
     0 8px 18px rgba(0,0,0,.18);
 }
 
-/* Hover = alleen extra schaal */
 .petal:hover{
-  transform: scale(1.05) translate(var(--tx), var(--ty));
   box-shadow:
     inset 0 3px 4px rgba(255,255,255,.3),
     0 14px 28px rgba(0,0,0,.22);
@@ -77,15 +72,20 @@ body{
 
 .petal.dim{ opacity:.35; }
 
-/* ===== POSITIES (HARD GECODEERD) ===== */
-.p1{ transform: translate(0px, -170px); }
-.p2{ transform: translate(150px, -85px); }
-.p3{ transform: translate(150px, 85px); }
-.p4{ transform: translate(0px, 170px); }
-.p5{ transform: translate(-150px, 85px); }
-.p6{ transform: translate(-150px, -85px); }
+.petal.active{
+  transform: translate(0px,0px);
+  z-index:5;
+}
 
-/* ===== ZIJPANEEL ===== */
+/* POSITIES */
+.p1{ --x:0px;    --y:-170px; }
+.p2{ --x:150px;  --y:-85px; }
+.p3{ --x:150px;  --y:85px; }
+.p4{ --x:0px;    --y:170px; }
+.p5{ --x:-150px; --y:85px; }
+.p6{ --x:-150px; --y:-85px; }
+
+/* ZIJPANEEL */
 .panel{
   width:340px;
   padding-top:40px;
@@ -105,19 +105,13 @@ body{
   margin:0 0 16px 0;
 }
 
-.panel ul{
-  list-style:none;
-  padding:0;
-  margin:0;
-}
+.panel ul{ list-style:none; padding:0; margin:0; }
 
 .panel li{
   display:flex;
   justify-content:space-between;
-  align-items:center;
   padding:10px 0;
   border-bottom:1px solid rgba(0,0,0,.08);
-  font-size:15px;
   opacity:0;
   transform:translateY(6px);
   transition:opacity .35s ease, transform .35s ease;
@@ -134,73 +128,45 @@ body{
   font-weight:600;
 }
 
-.arrow{ font-size:16px; }
-
 .footer{
   position:absolute;
   bottom:-32px;
-  left:0;
   width:100%;
   text-align:center;
   font-size:13px;
   color:#666;
-  pointer-events:none;
 }
 </style>
 </head>
 
 <body>
 <div class="stage">
-  <div class="wrapper">
+<div class="wrapper">
 
-    <div class="flower">
-      <div class="petal p1" data-k="wonen">Wonen</div>
-      <div class="petal p2" data-k="leven">Leven</div>
-      <div class="petal p3" data-k="leren">Leren</div>
-      <div class="petal p4" data-k="werken">Werken</div>
-      <div class="petal p5" data-k="verbouwen">Verbouwen</div>
-      <div class="petal p6" data-k="migreren">Migreren</div>
-    </div>
+<div class="flower">
+  <div class="petal p1" data-k="wonen">Wonen</div>
+  <div class="petal p2" data-k="leven">Leven</div>
+  <div class="petal p3" data-k="leren">Leren</div>
+  <div class="petal p4" data-k="werken">Werken</div>
+  <div class="petal p5" data-k="verbouwen">Verbouwen</div>
+  <div class="petal p6" data-k="migreren">Migreren</div>
+</div>
 
-    <div class="panel" id="panel">
-      <h3 id="panel-title"></h3>
-      <ul id="panel-list"></ul>
-    </div>
+<div class="panel" id="panel">
+  <h3 id="panel-title"></h3>
+  <ul id="panel-list"></ul>
+</div>
 
-    <div class="footer">Klik buiten de bloem om te sluiten</div>
-  </div>
+<div class="footer">Klik buiten de bloem om te sluiten</div>
+</div>
 </div>
 
 <script>
-const data = {
-  migreren: [
+const data={
+  migreren:[
     ["Emigratie","https://infofrankrijk.com/categorie/emigratie/"],
     ["Remigratie","https://infofrankrijk.com/categorie/remigratie/"],
     ["Overheden","https://infofrankrijk.com/categorie/overheden/"]
-  ],
-  wonen: [
-    ["Wonen in Frankrijk","https://infofrankrijk.com/categorie/wonen-in-frankrijk/"],
-    ["Vastgoed","https://infofrankrijk.com/categorie/vastgoed/"],
-    ["Huisje, boompje & beestje","https://infofrankrijk.com/categorie/huisje-boompje-beestje/"],
-    ["Cultuur & info","https://infofrankrijk.com/categorie/cultuur-info/"]
-  ],
-  leven: [
-    ["Zorg & welzijn","https://infofrankrijk.com/categorie/zorg-welzijn/"],
-    ["Geldzaken & belasting","https://infofrankrijk.com/categorie/geldzaken-belasting/"],
-    ["Juridisch & familie","https://infofrankrijk.com/categorie/juridisch-familie/"]
-  ],
-  leren: [
-    ["Onderwijs & cursussen","https://infofrankrijk.com/categorie/onderwijs-cursussen/"]
-  ],
-  werken: [
-    ["Arbeidsmarkt","https://infofrankrijk.com/categorie/arbeidsmarkt/"],
-    ["Ondernemen","https://infofrankrijk.com/categorie/ondernemen/"],
-    ["Toerisme","https://infofrankrijk.com/categorie/toerisme-sector/"]
-  ],
-  verbouwen: [
-    ["Planning & regels","https://infofrankrijk.com/categorie/planning-regels/"],
-    ["Techniek & installatie","https://infofrankrijk.com/categorie/techniek-installatie/"],
-    ["Constructie","https://infofrankrijk.com/categorie/constructie/"]
   ]
 };
 
@@ -211,17 +177,21 @@ const title=document.getElementById('panel-title');
 
 petals.forEach(p=>{
   p.addEventListener('click',()=>{
+    petals.forEach(o=>{
+      o.classList.toggle('dim',o!==p);
+      o.classList.toggle('active',o===p);
+    });
+
     const k=p.dataset.k;
-    petals.forEach(o=>o.classList.toggle('dim',o!==p));
     title.textContent=p.textContent;
     list.innerHTML='';
     panel.classList.add('active');
 
-    data[k].forEach((item,i)=>{
+    (data[k]||[]).forEach((item,i)=>{
       const li=document.createElement('li');
-      li.innerHTML=`<a href="${item[1]}" target="_top">${item[0]}</a><span class="arrow">➡️</span>`;
+      li.innerHTML=`<a href="${item[1]}" target="_top">${item[0]}</a> ➡️`;
       list.appendChild(li);
-      setTimeout(()=>li.classList.add('show'),120+i*70);
+      setTimeout(()=>li.classList.add('show'),120+i*80);
     });
   });
 });
