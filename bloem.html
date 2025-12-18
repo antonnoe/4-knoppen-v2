@@ -9,7 +9,7 @@
 /* ===== BASIS ===== */
 body{
   margin:0;
-  background:transparent;
+  background:transparent; /* volledig transparant */
   font-family:'Mulish', Arial, sans-serif;
   overflow:hidden;
 }
@@ -23,23 +23,24 @@ body{
   overflow:hidden;
 }
 
-/* ===== BLOEM ===== */
+/* ===== WRAPPER ===== */
 #flower-wrapper{
   position:relative;
-  width:560px;
-  height:600px;
+  width:520px;
+  height:560px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
 }
 
+/* ===== BLOEM ===== */
 #flower{
   position:relative;
-  width:560px;
-  height:560px;
+  width:520px;
+  height:520px;
   opacity:0;
-  transform:scale(0.9);
+  transform:scale(0.92);
   transition:opacity .7s ease, transform .7s ease;
 }
 
@@ -48,8 +49,8 @@ body{
   position:absolute;
   top:50%;
   left:50%;
-  width:140px;
-  height:140px;
+  width:130px;
+  height:130px;
   border-radius:50%;
   display:flex;
   align-items:center;
@@ -64,9 +65,12 @@ body{
   transition:
     background .35s ease,
     color .35s ease,
-    opacity .6s ease,
-    transform .6s ease;
-  transform:rotate(var(--a)) translate(210px) rotate(calc(-1 * var(--a)));
+    opacity .45s ease,
+    transform .55s ease;
+  transform:
+    rotate(var(--a))
+    translate(180px)           /* dichter bij elkaar */
+    rotate(calc(-1 * var(--a)));
 }
 
 /* ===== NIVEAU 2 ===== */
@@ -74,67 +78,83 @@ body{
   background:#800000;
   color:#ffffff;
   border:2px solid #800000;
+  z-index:2;
 }
 
 /* ===== NIVEAU 3 ===== */
 .secondary{
-  width:120px;
-  height:120px;
-  font-size:15px;
+  width:112px;
+  height:112px;
+  font-size:14px;
   background:rgba(128,0,0,0.12);
   border:2px solid rgba(128,0,0,0.45);
   color:#800000;
   opacity:0;
   pointer-events:none;
-  transform:rotate(var(--a)) translate(150px) rotate(calc(-1 * var(--a)));
+  z-index:1;
+
+  transform:
+    rotate(var(--a))
+    translate(140px)          /* start dichterbij */
+    rotate(calc(-1 * var(--a)));
 }
 
 .secondary.active{
   opacity:1;
   pointer-events:auto;
-  transform:rotate(var(--a)) translate(330px) rotate(calc(-1 * var(--a)));
+  transform:
+    rotate(var(--a))
+    translate(250px)          /* blijft binnen vlak */
+    rotate(calc(-1 * var(--a)));
 }
 
 /* CTA-pijl */
 .secondary::after{
   content:"➡️";
   position:absolute;
-  bottom:8px;
-  right:10px;
-  font-size:16px;
+  bottom:6px;
+  right:8px;
+  font-size:15px;
 }
 
 /* ===== SLUIT-HINT ===== */
 #close-hint{
-  margin-top:12px;
+  margin-top:10px;
   font-size:13px;
   color:#666;
   text-align:center;
+  pointer-events:none;
 }
 
 /* ===== MOBIEL ===== */
 @media (max-width:520px){
   #flower-wrapper{
-    width:460px;
-    height:520px;
+    width:420px;
+    height:480px;
   }
   #flower{
-    width:460px;
-    height:460px;
+    width:420px;
+    height:420px;
   }
   .petal{
-    width:120px;
-    height:120px;
+    width:112px;
+    height:112px;
     font-size:14px;
-    transform:rotate(var(--a)) translate(175px) rotate(calc(-1 * var(--a)));
+    transform:
+      rotate(var(--a))
+      translate(150px)
+      rotate(calc(-1 * var(--a)));
   }
   .secondary{
-    width:105px;
-    height:105px;
+    width:96px;
+    height:96px;
     font-size:13px;
   }
   .secondary.active{
-    transform:rotate(var(--a)) translate(285px) rotate(calc(-1 * var(--a)));
+    transform:
+      rotate(var(--a))
+      translate(215px)
+      rotate(calc(-1 * var(--a)));
   }
 }
 </style>
@@ -194,7 +214,6 @@ const flower = document.getElementById('flower');
 const primaries = document.querySelectorAll('.primary');
 const secondaries = document.querySelectorAll('.secondary');
 
-/* reset */
 function resetFlower(){
   secondaries.forEach(s => s.classList.remove('active'));
 }
