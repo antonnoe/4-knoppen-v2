@@ -6,7 +6,6 @@
 <title>Infofrankrijk – Wegwijzer</title>
 
 <style>
-/* ===== BASIS ===== */
 body{
   margin:0;
   background:transparent;
@@ -20,83 +19,75 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
 }
 
-/* ===== WRAPPER ===== */
 #flower-wrapper{
   position:relative;
-  width:520px;
-  height:580px;
+  width:500px;
+  height:560px;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
 }
 
-/* ===== BLOEM ===== */
 #flower{
   position:relative;
-  width:520px;
-  height:520px;
+  width:500px;
+  height:500px;
   opacity:0;
-  transform:scale(0.92);
-  transition:opacity .7s ease, transform .7s ease;
+  transform:scale(.92);
+  transition:opacity .6s ease, transform .6s ease;
 }
 
-/* ===== ALGEMENE CIRKELS ===== */
+/* ===== BASIS CIRKELS ===== */
 .petal{
   position:absolute;
   top:50%;
   left:50%;
-  width:130px;
-  height:130px;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
   font-family:'Poppins', Arial, sans-serif;
-  font-size:16px;
   font-weight:700;
   cursor:pointer;
-  text-decoration:none;
   user-select:none;
-  transition:
-    background .35s ease,
-    color .35s ease,
-    opacity .45s ease,
-    transform .55s ease;
+  transition:opacity .4s ease, transform .45s ease;
+}
+
+/* ===== LEVEL 2 ===== */
+.primary{
+  width:130px;
+  height:130px;
+  font-size:16px;
+  background:#800000;
+  color:#fff;
+  border:2px solid #800000;
+  z-index:3;
+
   transform:
     rotate(var(--a))
-    translate(185px)
+    translate(170px)
     rotate(calc(-1 * var(--a)));
 }
 
-/* ===== NIVEAU 2 ===== */
-.primary{
-  background:#800000;
-  color:#ffffff;
-  border:2px solid #800000;
-  z-index:3;
-}
-
-/* ===== NIVEAU 3 (OPENEN NAAR BINNEN) ===== */
+/* ===== LEVEL 3 – ECHT NAAR BINNEN ===== */
 .secondary{
-  width:110px;
-  height:110px;
-  font-size:14px;
-  background:rgba(128,0,0,0.14);
-  border:2px solid rgba(128,0,0,0.45);
+  width:96px;
+  height:96px;
+  font-size:13px;
+  background:rgba(128,0,0,.14);
+  border:2px solid rgba(128,0,0,.45);
   color:#800000;
   opacity:0;
   pointer-events:none;
   z-index:2;
 
-  /* start: verborgen, iets richting centrum */
+  /* start diep naar binnen */
   transform:
     rotate(var(--a))
-    translate(120px)
+    translate(80px)
     rotate(calc(-1 * var(--a)));
 }
 
@@ -104,65 +95,29 @@ body{
   opacity:1;
   pointer-events:auto;
 
-  /* eindpositie: INWAARTS + lichte overlap met niveau 2 */
+  /* eindpositie: BINNEN RING */
   transform:
     rotate(var(--a))
-    translate(155px)
+    translate(115px)
     rotate(calc(-1 * var(--a)));
 }
 
-/* CTA-pijl */
+/* CTA */
 .secondary::after{
   content:"➡️";
   position:absolute;
-  bottom:6px;
-  right:8px;
-  font-size:15px;
+  bottom:4px;
+  right:6px;
+  font-size:14px;
 }
 
-/* ===== SLUIT-HINT ===== */
+/* hint */
 #close-hint{
-  margin-top:12px;
+  margin-top:10px;
   font-size:13px;
   color:#666;
   text-align:center;
   pointer-events:none;
-}
-
-/* ===== MOBIEL ===== */
-@media (max-width:520px){
-  #flower-wrapper{
-    width:420px;
-    height:500px;
-  }
-  #flower{
-    width:420px;
-    height:420px;
-  }
-  .petal{
-    width:112px;
-    height:112px;
-    font-size:14px;
-    transform:
-      rotate(var(--a))
-      translate(150px)
-      rotate(calc(-1 * var(--a)));
-  }
-  .secondary{
-    width:96px;
-    height:96px;
-    font-size:13px;
-    transform:
-      rotate(var(--a))
-      translate(100px)
-      rotate(calc(-1 * var(--a)));
-  }
-  .secondary.active{
-    transform:
-      rotate(var(--a))
-      translate(125px)
-      rotate(calc(-1 * var(--a)));
-  }
 }
 </style>
 </head>
@@ -173,7 +128,7 @@ body{
 
     <div id="flower">
 
-      <!-- ===== NIVEAU 2 ===== -->
+      <!-- LEVEL 2 -->
       <div class="petal primary" data-k="wonen"     style="--a:0deg;">Wonen</div>
       <div class="petal primary" data-k="leven"     style="--a:60deg;">Leven</div>
       <div class="petal primary" data-k="leren"     style="--a:120deg;">Leren</div>
@@ -181,31 +136,31 @@ body{
       <div class="petal primary" data-k="verbouwen" style="--a:240deg;">Verbouwen</div>
       <div class="petal primary" data-k="migreren"  style="--a:300deg;">Migreren</div>
 
-      <!-- ===== Wonen ===== -->
-      <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/wonen-in-frankrijk/" style="--a:330deg;">Wonen in Frankrijk</a>
+      <!-- WONEN -->
+      <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/wonen-in-frankrijk/" style="--a:330deg;">Wonen</a>
       <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/vastgoed/" style="--a:30deg;">Vastgoed</a>
-      <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/huisje-boompje-beestje/" style="--a:90deg;">Huisje, boompje<br>&amp; beestje</a>
-      <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/cultuur-info/" style="--a:150deg;">Cultuur &amp; info</a>
+      <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/huisje-boompje-beestje/" style="--a:90deg;">Huisje<br>boompje</a>
+      <a class="petal secondary" data-p="wonen" href="https://infofrankrijk.com/categorie/cultuur-info/" style="--a:150deg;">Cultuur</a>
 
-      <!-- ===== Leven ===== -->
-      <a class="petal secondary" data-p="leven" href="https://infofrankrijk.com/categorie/zorg-welzijn/" style="--a:330deg;">Zorg &amp; welzijn</a>
-      <a class="petal secondary" data-p="leven" href="https://infofrankrijk.com/categorie/geldzaken-belasting/" style="--a:30deg;">Geldzaken &amp;<br>belasting</a>
-      <a class="petal secondary" data-p="leven" href="https://infofrankrijk.com/categorie/juridisch-familie/" style="--a:90deg;">Juridisch &amp;<br>familie</a>
+      <!-- LEVEN -->
+      <a class="petal secondary" data-p="leven" href="https://infofrankrijk.com/categorie/zorg-welzijn/" style="--a:330deg;">Zorg</a>
+      <a class="petal secondary" data-p="leven" href="https://infofrankrijk.com/categorie/geldzaken-belasting/" style="--a:30deg;">Geld</a>
+      <a class="petal secondary" data-p="leven" href="https://infofrankrijk.com/categorie/juridisch-familie/" style="--a:90deg;">Juridisch</a>
 
-      <!-- ===== Leren ===== -->
-      <a class="petal secondary" data-p="leren" href="https://infofrankrijk.com/categorie/onderwijs-cursussen/" style="--a:120deg;">Onderwijs &amp;<br>cursussen</a>
+      <!-- LEREN -->
+      <a class="petal secondary" data-p="leren" href="https://infofrankrijk.com/categorie/onderwijs-cursussen/" style="--a:120deg;">Onderwijs</a>
 
-      <!-- ===== Werken ===== -->
-      <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/arbeidsmarkt/" style="--a:210deg;">Arbeidsmarkt</a>
+      <!-- WERKEN -->
+      <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/arbeidsmarkt/" style="--a:210deg;">Arbeid</a>
       <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/ondernemen/" style="--a:180deg;">Ondernemen</a>
-      <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/toerisme-sector/" style="--a:150deg;">Toerismesector</a>
+      <a class="petal secondary" data-p="werken" href="https://infofrankrijk.com/categorie/toerisme-sector/" style="--a:150deg;">Toerisme</a>
 
-      <!-- ===== Verbouwen ===== -->
-      <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/planning-regels/" style="--a:270deg;">Planning &amp;<br>regels</a>
-      <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/techniek-installatie/" style="--a:240deg;">Techniek &amp;<br>installatie</a>
+      <!-- VERBOUWEN -->
+      <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/planning-regels/" style="--a:270deg;">Planning</a>
+      <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/techniek-installatie/" style="--a:240deg;">Techniek</a>
       <a class="petal secondary" data-p="verbouwen" href="https://infofrankrijk.com/categorie/constructie/" style="--a:210deg;">Constructie</a>
 
-      <!-- ===== Migreren ===== -->
+      <!-- MIGREREN -->
       <a class="petal secondary" data-p="migreren" href="https://infofrankrijk.com/categorie/overheden/" style="--a:330deg;">Overheden</a>
       <a class="petal secondary" data-p="migreren" href="https://infofrankrijk.com/categorie/emigratie/" style="--a:300deg;">Emigratie</a>
       <a class="petal secondary" data-p="migreren" href="https://infofrankrijk.com/categorie/remigratie/" style="--a:270deg;">Remigratie</a>
@@ -221,32 +176,29 @@ const flower = document.getElementById('flower');
 const primaries = document.querySelectorAll('.primary');
 const secondaries = document.querySelectorAll('.secondary');
 
-function resetFlower(){
+function reset(){
   secondaries.forEach(s => s.classList.remove('active'));
 }
 
-/* rustige opbouw */
-setTimeout(() => {
-  resetFlower();
-  flower.style.opacity = '1';
-  flower.style.transform = 'scale(1)';
-}, 80);
+setTimeout(()=>{
+  reset();
+  flower.style.opacity='1';
+  flower.style.transform='scale(1)';
+},80);
 
-/* niveau 2 = ontvouwen */
-primaries.forEach(p => {
-  p.addEventListener('click', () => {
-    const key = p.dataset.k;
-    resetFlower();
-    document.querySelectorAll(`[data-p="${key}"]`)
-      .forEach(s => s.classList.add('active'));
+primaries.forEach(p=>{
+  p.addEventListener('click',()=>{
+    const k=p.dataset.k;
+    reset();
+    document.querySelectorAll(`[data-p="${k}"]`)
+      .forEach(s=>s.classList.add('active'));
   });
 });
 
-/* niveau 3 = navigatie */
-secondaries.forEach(s => {
-  s.addEventListener('click', e => {
+secondaries.forEach(s=>{
+  s.addEventListener('click',e=>{
     e.preventDefault();
-    window.top.location.href = s.getAttribute('href');
+    window.top.location.href=s.href;
   });
 });
 </script>
