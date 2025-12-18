@@ -9,8 +9,6 @@
 :root{
   --rood:#800000;
   --rood-licht:#f5e6e6;
-  --rood-accent:#a00000;
-  --grijs:#f8f8f8;
   --shadow:0 20px 60px rgba(0,0,0,0.12);
   --flower:clamp(280px, 34vw, 420px);
   --petal:clamp(92px, 10.5vw, 120px);
@@ -22,20 +20,13 @@ html,body{
   margin:0;
   height:100%;
   font-family:'Segoe UI',system-ui,sans-serif;
-  background:transparent;
 }
 
-/* HOOFDCONTAINER */
-.content{
+/* ENKELE CONTAINER */
+.panel{
   position:fixed;
   inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(255,255,255,0.98);
-}
-
-.panel{
+  margin:auto;
   width:min(1200px,94vw);
   height:min(720px,82vh);
   background:#fff;
@@ -45,7 +36,6 @@ html,body{
   grid-template-columns:calc(var(--flower) + 40px) 1fr;
   gap:40px;
   padding:40px;
-  position:relative;
 }
 
 /* SLUITEN */
@@ -56,16 +46,12 @@ html,body{
   width:36px;
   height:36px;
   border-radius:10px;
-  border:none;
-  background:var(--grijs);
+  background:#f8f8f8;
   color:var(--rood);
   font-size:20px;
-  font-weight:300;
   cursor:pointer;
-  transition:all 0.2s ease;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  border:none;
+  transition:all 0.2s;
 }
 
 .close:hover{
@@ -74,16 +60,14 @@ html,body{
   transform:rotate(90deg);
 }
 
-/* BLOEM */
+/* BLOEM CONTAINER */
 .bloem{
   position:relative;
   width:var(--flower);
   height:var(--flower);
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 
+/* PETAL POSITIES IN BLOEM */
 .petal{
   position:absolute;
   width:var(--petal);
@@ -98,29 +82,37 @@ html,body{
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  transition:all 0.3s ease;
   box-shadow:0 4px 12px rgba(0,0,0,0.08);
-  animation:pulse 3s ease-in-out infinite;
+  animation:pulse 2.5s ease-in-out infinite;
 }
 
-/* Pulserende animatie voor leven */
+/* Fellere pulsatie */
 @keyframes pulse{
-  0%,100%{transform:scale(1);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
-  50%{transform:scale(1.03);box-shadow:0 6px 16px rgba(128,0,0,0.12)}
+  0%,100%{
+    transform:scale(1);
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    border-color:var(--rood-licht);
+  }
+  50%{
+    transform:scale(1.08);
+    box-shadow:0 8px 24px rgba(128,0,0,0.2);
+    border-color:var(--rood);
+  }
 }
 
-/* Verschillende delays voor natuurlijk effect */
+/* Verschillende delays */
 .p1{animation-delay:0s}
-.p2{animation-delay:0.5s}
-.p3{animation-delay:1s}
-.p4{animation-delay:1.5s}
-.p5{animation-delay:2s}
-.p6{animation-delay:2.5s}
+.p2{animation-delay:0.4s}
+.p3{animation-delay:0.8s}
+.p4{animation-delay:1.2s}
+.p5{animation-delay:1.6s}
+.p6{animation-delay:2s}
 
 .petal:hover{
   animation:none;
-  transform:scale(1.08);
-  box-shadow:0 8px 24px rgba(128,0,0,0.15);
+  transform:scale(1.1);
+  box-shadow:0 10px 28px rgba(128,0,0,0.25);
   border-color:var(--rood);
 }
 
@@ -129,24 +121,22 @@ html,body{
   background:var(--rood);
   color:#fff;
   border-color:var(--rood);
-  box-shadow:0 12px 32px rgba(128,0,0,0.25);
   transform:scale(1.05);
 }
 
-/* Bloem posities */
-.p1{left:50%;top:0;margin-left:calc(var(--petal)/-2)}
-.p2{right:10px;top:18%;margin-top:calc(var(--petal)/-2)}
-.p3{right:10px;bottom:18%;margin-bottom:calc(var(--petal)/-2)}
-.p4{left:50%;bottom:0;margin-left:calc(var(--petal)/-2)}
-.p5{left:10px;bottom:18%;margin-bottom:calc(var(--petal)/-2)}
-.p6{left:10px;top:18%;margin-top:calc(var(--petal)/-2)}
+/* Bloem vorm - cirkel posities */
+.p1{left:50%;top:5%;transform:translateX(-50%)}
+.p2{left:75%;top:25%;transform:translate(-50%,-50%)}
+.p3{left:75%;top:75%;transform:translate(-50%,-50%)}
+.p4{left:50%;bottom:5%;transform:translateX(-50%)}
+.p5{left:25%;top:75%;transform:translate(-50%,-50%)}
+.p6{left:25%;top:25%;transform:translate(-50%,-50%)}
 
-/* RECHTS - Links sectie */
+/* RECHTS */
 .side{
   display:flex;
   flex-direction:column;
   justify-content:center;
-  padding:0 20px;
 }
 
 .category-title{
@@ -169,25 +159,18 @@ html,body{
   justify-content:space-between;
   align-items:center;
   padding:12px 16px;
-  background:var(--grijs);
+  background:#f8f8f8;
   border-radius:12px;
-  border:1px solid transparent;
   font-weight:500;
   color:#333;
   opacity:0;
   animation:fadeUp 0.4s ease forwards;
-  transition:all 0.2s ease;
 }
 
 .link:hover{
   background:#fff;
-  border-color:var(--rood);
+  box-shadow:0 4px 12px rgba(128,0,0,0.1);
   transform:translateX(4px);
-}
-
-.link span{
-  flex:1;
-  font-size:clamp(13px, 1.3vw, 15px);
 }
 
 .go{
@@ -196,16 +179,14 @@ html,body{
   border-radius:8px;
   background:var(--rood);
   color:#fff;
-  display:inline-flex;
+  display:flex;
   align-items:center;
   justify-content:center;
   text-decoration:none;
   font-size:14px;
-  transition:all 0.2s ease;
 }
 
 .go:hover{
-  background:var(--rood-accent);
   transform:scale(1.1);
 }
 
@@ -227,7 +208,6 @@ html,body{
     grid-template-columns:calc(var(--flower) + 20px) 1fr;
   }
   .links{grid-template-columns:1fr}
-  .side{padding:0 10px}
 }
 
 @media (max-width:640px){
@@ -238,30 +218,27 @@ html,body{
   }
   .bloem{
     margin:0 auto;
-    height:calc(var(--flower) * 0.9);
   }
 }
 </style>
 </head>
 
 <body>
-<div class="content">
-  <div class="panel">
-    <button class="close" onclick="closeAll()">✕</button>
+<div class="panel">
+  <button class="close" onclick="closeAll()">✕</button>
 
-    <div class="bloem">
-      <div class="petal p1" data-key="wonen">Wonen</div>
-      <div class="petal p2" data-key="leven">Leven</div>
-      <div class="petal p3" data-key="leren">Leren</div>
-      <div class="petal p4" data-key="werken">Werken</div>
-      <div class="petal p5" data-key="verbouwen">Verbouwen</div>
-      <div class="petal p6" data-key="migreren">Migreren</div>
-    </div>
+  <div class="bloem">
+    <div class="petal p1" data-key="wonen">Wonen</div>
+    <div class="petal p2" data-key="leven">Leven</div>
+    <div class="petal p3" data-key="leren">Leren</div>
+    <div class="petal p4" data-key="werken">Werken</div>
+    <div class="petal p5" data-key="verbouwen">Verbouwen</div>
+    <div class="petal p6" data-key="migreren">Migreren</div>
+  </div>
 
-    <div class="side">
-      <h2 class="category-title" id="title" style="display:none"></h2>
-      <div class="links" id="links"></div>
-    </div>
+  <div class="side">
+    <h2 class="category-title" id="title" style="display:none"></h2>
+    <div class="links" id="links"></div>
   </div>
 </div>
 
@@ -298,10 +275,6 @@ const data={
   ]
 };
 
-const petals=document.querySelectorAll(".petal");
-const links=document.getElementById("links");
-const title=document.getElementById("title");
-
 const categoryNames={
   wonen:"Wonen & Vastgoed",
   leven:"Leven & Welzijn",
@@ -312,12 +285,14 @@ const categoryNames={
 };
 
 function renderLinks(key){
-  petals.forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll(".petal").forEach(x=>x.classList.remove("active"));
   event.target.classList.add("active");
+  
+  const title=document.getElementById("title");
+  const links=document.getElementById("links");
   
   title.textContent=categoryNames[key];
   title.style.display="block";
-  title.style.animationDelay="0s";
   
   links.innerHTML="";
   (data[key]||[]).forEach(([t,u],i)=>{
@@ -329,13 +304,13 @@ function renderLinks(key){
   });
 }
 
-petals.forEach(p=>{
+document.querySelectorAll(".petal").forEach(p=>{
   p.addEventListener("click",e=>renderLinks(p.dataset.key));
 });
 
 function closeAll(){
   window.parent.postMessage("closeWegwijzer","*");
-  document.querySelector(".content").style.display="none";
+  document.querySelector(".panel").style.display="none";
 }
 </script>
 </body>
