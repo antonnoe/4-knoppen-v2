@@ -24,10 +24,9 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(255,255,255,0.95);
+  background:transparent; /* Transparent voor iframe */
 }
 
-/* MAIN PANEL - GEEN EXTRA CONTAINERS */
 .panel{
   width:min(1200px,94vw);
   height:min(720px,82vh);
@@ -41,28 +40,7 @@ body{
   position:relative;
 }
 
-/* ENIGE SLUITKNOP */
-.close{
-  position:absolute;
-  top:20px;
-  right:20px;
-  width:36px;
-  height:36px;
-  border-radius:10px;
-  background:#f8f8f8;
-  color:var(--rood);
-  font-size:20px;
-  cursor:pointer;
-  border:none;
-  transition:all 0.2s;
-  z-index:10;
-}
-
-.close:hover{
-  background:var(--rood);
-  color:#fff;
-  transform:rotate(90deg);
-}
+/* GEEN CLOSE KNOP MEER - die zit in parent */
 
 /* BLOEM */
 .bloem{
@@ -225,7 +203,7 @@ body{
 
 <body>
 <div class="panel">
-  <button class="close" onclick="closeAll()">✕</button>
+  <!-- GEEN CLOSE KNOP MEER! -->
 
   <div class="bloem">
     <div class="petal p1" data-key="wonen">Wonen</div>
@@ -308,10 +286,7 @@ document.querySelectorAll(".petal").forEach(p=>{
   p.addEventListener("click",e=>renderLinks(p.dataset.key));
 });
 
-function closeAll(){
-  window.parent.postMessage("closeWegwijzer","*");
-  document.querySelector(".panel").style.display="none";
-}
+// GEEN closeAll() functie meer nodig!
 </script>
 </body>
 </html>
