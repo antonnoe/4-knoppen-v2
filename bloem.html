@@ -1,205 +1,253 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Infofrankrijk Wegwijzer</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Infofrankrijk – Bloemnavigatie</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Mulish:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Mulish:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-body{
+:root{
+  --rood:#800000;
+  --rood-zacht:rgba(128,0,0,.25);
+}
+
+html,body{
   margin:0;
-  font-family:'Mulish', sans-serif;
+  padding:0;
+  font-family:'Mulish',sans-serif;
   background:transparent;
+}
+
+.overlay{
+  position:relative;
+  max-width:1100px;
+  margin:20px auto;
+  padding:30px 30px 60px;
+  border-radius:22px;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 10px 40px rgba(0,0,0,.15);
   overflow:hidden;
 }
 
-.stage{
-  width:100%;
-  height:100vh;
-  display:flex;
-  justify-content:center;
+.close{
+  position:absolute;
+  top:18px;
+  right:18px;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:2px solid var(--rood);
+  color:var(--rood);
+  background:#fff;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:420px 1fr;
+  gap:40px;
   align-items:center;
 }
 
-.wrapper{
-  position:relative;
-  width:900px;
-  height:520px;
-  display:flex;
-  gap:40px;
-}
-
-.flower{
+/* ===== BLOEM ===== */
+.bloem{
   position:relative;
   width:420px;
   height:420px;
+  margin:auto;
 }
 
 .petal{
   position:absolute;
-  top:50%;
-  left:50%;
-  width:120px;
-  height:120px;
-  margin:-60px;
+  width:130px;
+  height:130px;
   border-radius:50%;
-  background:#800000;
+  background:var(--rood);
   color:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
-  text-align:center;
-  font-family:'Poppins', sans-serif;
+  font-family:'Poppins',sans-serif;
+  font-size:16px;
   font-weight:600;
   cursor:pointer;
-  user-select:none;
-
-  transform: translate(var(--x), var(--y));
-  transition: transform .45s ease, opacity .3s ease, box-shadow .3s ease;
-
-  box-shadow:
-    inset 0 2px 3px rgba(255,255,255,.25),
-    0 8px 18px rgba(0,0,0,.18);
+  transition:transform .6s ease, box-shadow .3s ease, background .3s ease;
+  box-shadow:0 12px 26px rgba(0,0,0,.25);
 }
 
-.petal:hover{
-  box-shadow:
-    inset 0 3px 4px rgba(255,255,255,.3),
-    0 14px 28px rgba(0,0,0,.22);
+.petal.inactive{
+  background:var(--rood-zacht);
+  box-shadow:0 6px 14px rgba(0,0,0,.15);
 }
-
-.petal.dim{ opacity:.35; }
 
 .petal.active{
-  transform: translate(0px,0px);
   z-index:5;
+  transform:translate(145px,145px) scale(1.05);
 }
 
-/* POSITIES */
-.p1{ --x:0px;    --y:-170px; }
-.p2{ --x:150px;  --y:-85px; }
-.p3{ --x:150px;  --y:85px; }
-.p4{ --x:0px;    --y:170px; }
-.p5{ --x:-150px; --y:85px; }
-.p6{ --x:-150px; --y:-85px; }
+/* vaste posities */
+.p1{top:0;left:145px;}     /* Wonen */
+.p2{top:60px;left:290px;} /* Leven */
+.p3{top:210px;left:290px;}/* Leren */
+.p4{top:290px;left:145px;}/* Werken */
+.p5{top:210px;left:0;}    /* Verbouwen */
+.p6{top:60px;left:0;}     /* Migreren */
 
-/* ZIJPANEEL */
-.panel{
-  width:340px;
-  padding-top:40px;
-  opacity:0;
-  transform:translateX(16px);
-  transition:opacity .35s ease, transform .35s ease;
+/* ===== ZIJPANEEL ===== */
+.panel h2{
+  margin:0 0 16px;
+  font-family:'Poppins',sans-serif;
+  color:var(--rood);
 }
 
-.panel.active{
-  opacity:1;
-  transform:translateX(0);
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
 }
 
-.panel h3{
-  font-family:'Poppins', sans-serif;
-  color:#800000;
-  margin:0 0 16px 0;
-}
-
-.panel ul{ list-style:none; padding:0; margin:0; }
-
-.panel li{
+.item{
   display:flex;
   justify-content:space-between;
-  padding:10px 0;
-  border-bottom:1px solid rgba(0,0,0,.08);
-  opacity:0;
-  transform:translateY(6px);
-  transition:opacity .35s ease, transform .35s ease;
-}
-
-.panel li.show{
-  opacity:1;
-  transform:translateY(0);
-}
-
-.panel a{
-  text-decoration:none;
-  color:#800000;
+  align-items:center;
+  padding:10px 14px;
+  border-radius:10px;
+  background:#fff;
+  border:1px solid #eee;
   font-weight:600;
 }
 
+.item a{
+  text-decoration:none;
+  color:var(--rood);
+}
+
+.arrow{
+  background:var(--rood);
+  color:#fff;
+  border-radius:6px;
+  padding:2px 6px;
+  font-size:12px;
+}
+
+/* ===== FOOTER ===== */
 .footer{
   position:absolute;
-  bottom:-32px;
-  width:100%;
+  bottom:0;
+  left:0;
+  right:0;
+  background:var(--rood);
+  color:#fff;
   text-align:center;
+  padding:10px;
   font-size:13px;
-  color:#666;
+}
+
+/* ===== MOBIEL ===== */
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr;}
+  .bloem{width:300px;height:300px;}
+  .petal{width:95px;height:95px;font-size:14px;}
+  .petal.active{transform:translate(102px,102px) scale(1.05);}
 }
 </style>
 </head>
 
 <body>
-<div class="stage">
-<div class="wrapper">
 
-<div class="flower">
-  <div class="petal p1" data-k="wonen">Wonen</div>
-  <div class="petal p2" data-k="leven">Leven</div>
-  <div class="petal p3" data-k="leren">Leren</div>
-  <div class="petal p4" data-k="werken">Werken</div>
-  <div class="petal p5" data-k="verbouwen">Verbouwen</div>
-  <div class="petal p6" data-k="migreren">Migreren</div>
-</div>
+<div class="overlay" onclick="closeIfOutside(event)">
+<button class="close" onclick="window.parent.postMessage('close','*')">×</button>
 
-<div class="panel" id="panel">
-  <h3 id="panel-title"></h3>
-  <ul id="panel-list"></ul>
+<div class="layout">
+
+  <div class="bloem" id="bloem">
+    <div class="petal p1" data-key="wonen">Wonen</div>
+    <div class="petal p2" data-key="leven">Leven</div>
+    <div class="petal p3" data-key="leren">Leren</div>
+    <div class="petal p4" data-key="werken">Werken</div>
+    <div class="petal p5" data-key="verbouwen">Verbouwen</div>
+    <div class="petal p6" data-key="migreren">Migreren</div>
+  </div>
+
+  <div class="panel">
+    <h2 id="titel">Kies een onderwerp</h2>
+    <div class="list" id="lijst"></div>
+  </div>
+
 </div>
 
 <div class="footer">Klik buiten de bloem om te sluiten</div>
 </div>
-</div>
-
 
 <script>
 const data = {
   wonen: [
-    ["Wonen in Frankrijk", "https://infofrankrijk.com/categorie/wonen-in-frankrijk/"],
-    ["Vastgoed", "https://infofrankrijk.com/categorie/vastgoed/"],
-    ["Huisje, boompje & beestje", "https://infofrankrijk.com/categorie/huisje-boompje-beestje/"],
-    ["Cultuur & info", "https://infofrankrijk.com/categorie/cultuur-info/"]
+    ["Wonen in Frankrijk","https://infofrankrijk.com/categorie/wonen-in-frankrijk/"],
+    ["Vastgoed","https://infofrankrijk.com/categorie/vastgoed/"],
+    ["Huisje, boompje & beestje","https://infofrankrijk.com/categorie/huisje-boompje-beestje/"],
+    ["Cultuur & info","https://infofrankrijk.com/categorie/cultuur-info/"]
   ],
-
   leven: [
-    ["Zorg & welzijn", "https://infofrankrijk.com/categorie/zorg-welzijn/"],
-    ["Geldzaken & belasting", "https://infofrankrijk.com/categorie/geldzaken-belasting/"],
-    ["Juridisch & familie", "https://infofrankrijk.com/categorie/juridisch-familie/"]
+    ["Zorg & welzijn","https://infofrankrijk.com/categorie/zorg-welzijn/"],
+    ["Geldzaken & belasting","https://infofrankrijk.com/categorie/geldzaken-belasting/"],
+    ["Juridisch & familie","https://infofrankrijk.com/categorie/juridisch-familie/"]
   ],
-
   leren: [
-    ["Onderwijs & cursussen", "https://infofrankrijk.com/categorie/onderwijs-cursussen/"]
+    ["Onderwijs & cursussen","https://infofrankrijk.com/categorie/onderwijs-cursussen/"]
   ],
-
   werken: [
-    ["Arbeidsmarkt", "https://infofrankrijk.com/categorie/arbeidsmarkt/"],
-    ["Ondernemen", "https://infofrankrijk.com/categorie/ondernemen/"],
-    ["Toerisme", "https://infofrankrijk.com/categorie/toerisme-sector/"]
+    ["Arbeidsmarkt","https://infofrankrijk.com/categorie/arbeidsmarkt/"],
+    ["Ondernemen","https://infofrankrijk.com/categorie/ondernemen/"],
+    ["Toerisme","https://infofrankrijk.com/categorie/toerisme-sector/"]
   ],
-
   verbouwen: [
-    ["Planning & regels", "https://infofrankrijk.com/categorie/planning-regels/"],
-    ["Techniek & installatie", "https://infofrankrijk.com/categorie/techniek-installatie/"],
-    ["Constructie", "https://infofrankrijk.com/categorie/constructie/"]
+    ["Planning & regels","https://infofrankrijk.com/categorie/planning-regels/"],
+    ["Techniek & installatie","https://infofrankrijk.com/categorie/techniek-installatie/"],
+    ["Constructie","https://infofrankrijk.com/categorie/constructie/"]
   ],
-
   migreren: [
-    ["Emigratie", "https://infofrankrijk.com/categorie/emigratie/"],
-    ["Remigratie", "https://infofrankrijk.com/categorie/remigratie/"],
-    ["Overheden", "https://infofrankrijk.com/categorie/overheden/"]
+    ["Emigratie","https://infofrankrijk.com/categorie/emigratie/"],
+    ["Remigratie","https://infofrankrijk.com/categorie/remigratie/"],
+    ["Overheden","https://infofrankrijk.com/categorie/overheden/"]
   ]
 };
 
+const petals=document.querySelectorAll('.petal');
+const titel=document.getElementById('titel');
+const lijst=document.getElementById('lijst');
+
+petals.forEach(p=>{
+  p.addEventListener('click',()=>{
+    petals.forEach(x=>{
+      x.classList.remove('active');
+      x.classList.add('inactive');
+    });
+
+    p.classList.add('active');
+    p.classList.remove('inactive');
+
+    const key=p.dataset.key;
+    titel.textContent=p.textContent;
+    lijst.innerHTML='';
+
+    data[key].forEach(([t,u])=>{
+      const d=document.createElement('div');
+      d.className='item';
+      d.innerHTML=`<a href="${u}" target="_blank">${t}</a><span class="arrow">➜</span>`;
+      lijst.appendChild(d);
+    });
+  });
+});
+
+function closeIfOutside(e){
+  if(e.target.classList.contains('overlay')){
+    window.parent.postMessage('close','*');
+  }
+}
 </script>
+
 </body>
 </html>
