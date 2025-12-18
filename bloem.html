@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Infofrankrijk – Wegwijzer</title>
 
 <style>
@@ -10,8 +10,6 @@
   --rood:#800000;
   --rood-licht:rgba(128,0,0,.22);
   --shadow:0 18px 40px rgba(0,0,0,.18);
-
-  /* schaal (geen scroll, altijd 2 kolommen) */
   --flower: clamp(280px, 34vw, 420px);
   --petal:  clamp(92px,  10.5vw, 120px);
 }
@@ -21,37 +19,51 @@
 html,body{
   margin:0;
   height:100%;
-  background:transparent;
   font-family:Mulish,system-ui,sans-serif;
-  overflow:hidden; /* nooit scroll */
+  background:transparent;
+  overflow:hidden;
 }
 
-/* buiten het paneel: niets zichtbaar */
+/* ENIGE OVERLAY (onzichtbaar) */
 .overlay{
   position:fixed;
   inset:0;
-  background:transparent;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
-/* één tegel (één paneel) */
+/* ENIGE ZICHTBARE TEGEL */
 .panel{
-  width:min(1200px, 94vw);
-  height:min(720px, 82vh);
+  position:relative;
+  width:min(1200px,94vw);
+  height:min(720px,82vh);
   background:#fff;
   border-radius:22px;
   box-shadow:var(--shadow);
-  overflow:hidden;
   display:grid;
-  grid-template-columns: calc(var(--flower) + 40px) 1fr; /* links bloem, rechts links */
+  grid-template-columns: calc(var(--flower) + 40px) 1fr;
   gap:44px;
   padding:40px;
-  align-items:center;
 }
 
-/* LINKS: bloem */
+/* SLUITEN */
+.close{
+  position:absolute;
+  top:18px;
+  right:18px;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:2px solid var(--rood);
+  background:#fff;
+  color:var(--rood);
+  font-size:18px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* BLOEM */
 .bloem{
   position:relative;
   width:var(--flower);
@@ -64,78 +76,66 @@ html,body{
   height:var(--petal);
   border-radius:50%;
   background:var(--rood-licht);
-  color:var(--rood); /* inactief: tekst #800000 */
+  color:var(--rood);
   font-family:Poppins,system-ui,sans-serif;
   font-weight:700;
   display:flex;
   align-items:center;
   justify-content:center;
-  text-align:center;
-  user-select:none;
   cursor:pointer;
   box-shadow:0 14px 32px rgba(0,0,0,.14);
-  transition:background .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+  transition:background .2s ease,color .2s ease,transform .2s ease;
 }
 
 .petal.active{
-  background:var(--rood); /* actief: vol #800000 */
-  color:#fff;             /* actief: wit */
+  background:var(--rood);
+  color:#fff;
   transform:scale(1.06);
-  box-shadow:0 18px 42px rgba(0,0,0,.20);
 }
 
-/* vaste posities zonder transform-positionering */
-.p1{ left:50%; top:0%;   transform:translate(-50%, 0); }
-.p2{ right:0%; top:25%;  transform:translate(0, -50%); }
-.p3{ right:0%; top:75%;  transform:translate(0, -50%); }
-.p4{ left:50%; top:100%; transform:translate(-50%, -100%); }
-.p5{ left:0%;  top:75%;  transform:translate(0, -50%); }
-.p6{ left:0%;  top:25%;  transform:translate(0, -50%); }
+/* vaste posities */
+.p1{ left:50%; top:0%;   transform:translate(-50%,0); }
+.p2{ right:0%; top:25%;  transform:translate(0,-50%); }
+.p3{ right:0%; top:75%;  transform:translate(0,-50%); }
+.p4{ left:50%; top:100%; transform:translate(-50%,-100%); }
+.p5{ left:0%;  top:75%;  transform:translate(0,-50%); }
+.p6{ left:0%;  top:25%;  transform:translate(0,-50%); }
 
-/* RECHTS: level 3 (alle links) */
+/* LEVEL 3 – vlak, rechts */
 .side{
-  height:100%;
   display:flex;
   align-items:center;
-  overflow:hidden;
 }
 
 .links{
   width:100%;
   display:grid;
-  grid-template-columns:repeat(2, minmax(0, 1fr)); /* alle links, reflowt horizontaal */
-  gap:14px 18px;
-  overflow:hidden;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:32px;
+  row-gap:18px;
 }
 
-/* tegel per link (subtiel) */
 .link{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:14px;
-  padding:16px 18px;
-  border-radius:14px;
-  border:1px solid #eee;
-  background:#fff;
-  color:var(--rood);
+  align-items:center;
+  padding:6px 0;
   font-weight:700;
-
+  color:var(--rood);
+  border-bottom:1px solid rgba(0,0,0,.06);
   opacity:0;
-  transform:translateY(8px);               /* enige dynamiek */
-  animation:fadeUp .34s ease forwards;
+  transform:translateY(6px);
+  animation:fadeUp .3s ease forwards;
 }
 
 @keyframes fadeUp{
   to{opacity:1;transform:none}
 }
 
-/* klein vierkantje met pijltje ↗ */
 .go{
-  flex:0 0 auto;
-  width:28px;
-  height:28px;
-  border-radius:7px;
+  width:26px;
+  height:26px;
+  border-radius:6px;
   border:1.5px solid var(--rood);
   color:var(--rood);
   display:inline-flex;
@@ -143,25 +143,25 @@ html,body{
   justify-content:center;
   text-decoration:none;
   font-size:14px;
-  line-height:1;
 }
 
-/* zeer smal: behoud 2 kolommen door level-3 naar 1 kolom te zetten (geen stacking van bloem/links) */
-@media (max-width: 980px){
+@media (max-width:980px){
   .panel{
-    gap:28px;
     padding:24px;
+    gap:28px;
     grid-template-columns: calc(var(--flower) + 20px) 1fr;
   }
-  .links{ grid-template-columns: 1fr; }
+  .links{ grid-template-columns:1fr; }
 }
 </style>
 </head>
 
 <body>
 <div class="overlay" id="overlay">
-  <div class="panel" id="panel" role="dialog" aria-label="Infofrankrijk Wegwijzer">
-    <div class="bloem" aria-label="Thema's">
+  <div class="panel" id="panel">
+    <button class="close" onclick="closeAll()">×</button>
+
+    <div class="bloem">
       <div class="petal p1" data-key="wonen">Wonen</div>
       <div class="petal p2" data-key="leven">Leven</div>
       <div class="petal p3" data-key="leren">Leren</div>
@@ -171,73 +171,69 @@ html,body{
     </div>
 
     <div class="side">
-      <div class="links" id="links" aria-label="Links"></div>
+      <div class="links" id="links"></div>
     </div>
   </div>
 </div>
 
 <script>
-const data = {
-  wonen: [
+const data={
+  wonen:[
     ["Wonen in Frankrijk","https://infofrankrijk.com/categorie/wonen-in-frankrijk/"],
     ["Vastgoed","https://infofrankrijk.com/categorie/vastgoed/"],
     ["Huisje, boompje & beestje","https://infofrankrijk.com/categorie/huisje-boompje-beestje/"],
     ["Cultuur & info","https://infofrankrijk.com/categorie/cultuur-info/"]
   ],
-  leven: [
+  leven:[
     ["Zorg & welzijn","https://infofrankrijk.com/categorie/zorg-welzijn/"],
     ["Geldzaken & belasting","https://infofrankrijk.com/categorie/geldzaken-belasting/"],
     ["Juridisch & familie","https://infofrankrijk.com/categorie/juridisch-familie/"]
   ],
-  leren: [
+  leren:[
     ["Onderwijs & cursussen","https://infofrankrijk.com/categorie/onderwijs-cursussen/"]
   ],
-  werken: [
+  werken:[
     ["Arbeidsmarkt","https://infofrankrijk.com/categorie/arbeidsmarkt/"],
     ["Ondernemen","https://infofrankrijk.com/categorie/ondernemen/"],
     ["Toerisme","https://infofrankrijk.com/categorie/toerisme-sector/"]
   ],
-  verbouwen: [
+  verbouwen:[
     ["Planning & regels","https://infofrankrijk.com/categorie/planning-regels/"],
     ["Techniek & installatie","https://infofrankrijk.com/categorie/techniek-installatie/"],
     ["Constructie","https://infofrankrijk.com/categorie/constructie/"]
   ],
-  migreren: [
+  migreren:[
     ["Overheden","https://infofrankrijk.com/categorie/overheden/"],
     ["Emigratie","https://infofrankrijk.com/categorie/emigratie/"],
     ["Remigratie","https://infofrankrijk.com/categorie/remigratie/"]
   ]
 };
 
-const petals = [...document.querySelectorAll(".petal")];
-const linksEl = document.getElementById("links");
+const petals=[...document.querySelectorAll(".petal")];
+const links=document.getElementById("links");
 
 function renderLinks(key){
-  const items = data[key] || [];
-  linksEl.innerHTML = "";
-  items.forEach(([t,u], i) => {
-    const d = document.createElement("div");
-    d.className = "link";
-    d.style.animationDelay = (i * 0.05) + "s";
-    d.innerHTML = `<span>${t}</span><a class="go" href="${u}" target="_blank" rel="noopener" aria-label="Open ${t}">↗</a>`;
-    linksEl.appendChild(d);
+  links.innerHTML="";
+  (data[key]||[]).forEach(([t,u],i)=>{
+    const d=document.createElement("div");
+    d.className="link";
+    d.style.animationDelay=(i*0.05)+"s";
+    d.innerHTML=`<span>${t}</span><a class="go" href="${u}" target="_blank" rel="noopener">↗</a>`;
+    links.appendChild(d);
   });
 }
 
-petals.forEach(p => {
-  p.addEventListener("click", () => {
-    petals.forEach(x => x.classList.remove("active"));
+petals.forEach(p=>{
+  p.addEventListener("click",()=>{
+    petals.forEach(x=>x.classList.remove("active"));
     p.classList.add("active");
-    renderLinks(p.dataset.key); /* ALLE level-3 links */
+    renderLinks(p.dataset.key);
   });
 });
 
-/* sluiten: klik buiten het ENIGE paneel (alles in één keer dicht) */
-document.getElementById("overlay").addEventListener("click", (e) => {
-  if (!document.getElementById("panel").contains(e.target)) {
-    document.getElementById("overlay").style.display = "none";
-  }
-});
+function closeAll(){
+  document.getElementById("overlay").style.display="none";
+}
 </script>
 </body>
 </html>
