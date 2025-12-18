@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Infofrankrijk – Navigatie</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Infofrankrijk – Wegwijzer</title>
 
 <style>
 :root{
   --rood:#800000;
-  --rood-licht:rgba(128,0,0,.30);
+  --rood-licht:rgba(128,0,0,.28);
+  --schaduw:0 14px 34px rgba(0,0,0,.18);
 }
 
 *{box-sizing:border-box}
 
-body{
+html,body{
   margin:0;
-  font-family: Mulish, system-ui, sans-serif;
+  font-family:Mulish,system-ui,sans-serif;
+  background:#f5f5f5;
 }
 
-/* OVERLAY */
+/* OVERLAY (sluiten = klik buiten) */
 .overlay{
   position:fixed;
   inset:0;
@@ -29,32 +31,16 @@ body{
   z-index:9999;
 }
 
-/* PANEL */
+/* HOOFDPANEEL */
 .panel{
   position:relative;
-  width:92vw;
+  width:94vw;
   max-width:1200px;
-  height:80vh;
-  background:white;
+  height:78vh;
+  background:#fff;
   border-radius:26px;
-  box-shadow:0 20px 50px rgba(0,0,0,.18);
+  box-shadow:0 22px 52px rgba(0,0,0,.2);
   overflow:hidden;
-}
-
-/* SLUITKNOP – ENKEL DEZE */
-.close{
-  position:absolute;
-  top:16px;
-  right:16px;
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  border:2px solid var(--rood);
-  background:white;
-  color:var(--rood);
-  font-size:20px;
-  cursor:pointer;
-  z-index:10;
 }
 
 /* LAYOUT */
@@ -62,123 +48,123 @@ body{
   display:flex;
   height:100%;
   padding:40px;
-  padding-bottom:80px;
+  gap:40px;
 }
 
-/* BLOEM */
-.bloem{
-  width:50%;
-  min-width:420px;
+/* BLOEM – VISUEEL ANKER */
+.bloem-wrap{
   position:relative;
+  width:48%;
+  min-width:420px;
   display:flex;
   justify-content:center;
   align-items:center;
+  overflow:visible; reminding
 }
 
-/* PETALS */
+.bloem{
+  position:relative;
+  width:420px;
+  height:420px;
+}
+
+/* PETALS – STATISCH GEPLAATST */
 .petal{
   position:absolute;
   width:120px;
   height:120px;
   border-radius:50%;
   background:var(--rood-licht);
-  color:white;
+  color:#fff;
+  font-family:Poppins,system-ui,sans-serif;
   font-weight:700;
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
+  text-align:center;
   cursor:pointer;
-  transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
-  box-shadow:0 10px 22px rgba(0,0,0,.18);
-}
-
-.petal:hover{
-  transform:scale(1.04);
+  box-shadow:var(--schaduw);
+  transition:background .25s ease, transform .25s ease, box-shadow .25s ease;
 }
 
 .petal.active{
   background:var(--rood);
-  box-shadow:0 14px 30px rgba(0,0,0,.28);
-  transform:scale(1.08);
+  transform:scale(1.06);
+  box-shadow:0 18px 40px rgba(0,0,0,.28);
 }
 
-/* POSITIES (ovaal, stabiel) */
-.p1{transform:translate(0,-160px)}
-.p2{transform:translate(150px,-80px)}
-.p3{transform:translate(150px,80px)}
-.p4{transform:translate(0,160px)}
-.p5{transform:translate(-150px,80px)}
-.p6{transform:translate(-150px,-80px)}
+/* vaste geometrie (geen transform-animatie voor positie) */
+.p1{top:-10px; left:150px}
+.p2{top:80px; right:-10px}
+.p3{bottom:80px; right:-10px}
+.p4{bottom:-10px; left:150px}
+.p5{bottom:80px; left:-10px}
+.p6{top:80px; left:-10px}
 
-/* ZIJPANEEL */
+/* ZIJPANEEL – ENIGE DYNAMIEK */
 .side{
-  width:50%;
-  padding-left:40px;
+  width:52%;
   display:flex;
   flex-direction:column;
   justify-content:center;
 }
 
 .side h2{
-  font-family:Poppins, sans-serif;
+  margin:0 0 24px;
+  font-family:Poppins,system-ui,sans-serif;
   color:var(--rood);
   font-size:28px;
-  margin:0 0 24px;
 }
 
-/* LINKS */
 .links{
   display:flex;
   flex-direction:column;
-  gap:14px;
+  gap:16px;
 }
 
 .link{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:14px 18px;
-  border-radius:12px;
+  padding:16px 20px;
+  border-radius:14px;
   border:1px solid #eee;
   font-weight:600;
   color:var(--rood);
-  background:white;
+  background:#fff;
   opacity:0;
-  transform:translateX(16px);
-  animation:fadeIn .4s ease forwards;
+  transform:translateY(8px);
+  animation:fadeUp .45s ease forwards;
 }
 
 .link:nth-child(2){animation-delay:.06s}
 .link:nth-child(3){animation-delay:.12s}
 .link:nth-child(4){animation-delay:.18s}
 
-@keyframes fadeIn{
+@keyframes fadeUp{
   to{opacity:1;transform:none}
 }
 
 .go{
   background:var(--rood);
-  color:white;
-  border-radius:8px;
-  padding:6px 10px;
+  color:#fff;
+  border-radius:10px;
+  padding:8px 12px;
   text-decoration:none;
+  font-weight:700;
 }
 
-/* FOOTER */
+/* FOOTER HINT */
 .footer{
   position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  height:56px;
+  left:0; right:0; bottom:0;
+  height:54px;
   background:var(--rood);
-  color:white;
+  color:#fff;
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   font-size:14px;
-  border-bottom-left-radius:26px;
-  border-bottom-right-radius:26px;
 }
 </style>
 </head>
@@ -187,22 +173,24 @@ body{
 
 <div class="overlay" id="overlay">
   <div class="panel" id="panel">
-    <button class="close" onclick="closeAll()">×</button>
-
     <div class="layout">
-      <div class="bloem">
-        <div class="petal p1" data-key="wonen">Wonen</div>
-        <div class="petal p2" data-key="leven">Leven</div>
-        <div class="petal p3" data-key="leren">Leren</div>
-        <div class="petal p4" data-key="werken">Werken</div>
-        <div class="petal p5" data-key="verbouwen">Verbouwen</div>
-        <div class="petal p6" data-key="migreren">Migreren</div>
+
+      <div class="bloem-wrap">
+        <div class="bloem">
+          <div class="petal p1" data-key="wonen">Wonen</div>
+          <div class="petal p2" data-key="leven">Leven</div>
+          <div class="petal p3" data-key="leren">Leren</div>
+          <div class="petal p4" data-key="werken">Werken</div>
+          <div class="petal p5" data-key="verbouwen">Verbouwen</div>
+          <div class="petal p6" data-key="migreren">Migreren</div>
+        </div>
       </div>
 
       <div class="side">
         <h2 id="titel">Kies een thema</h2>
         <div class="links" id="links"></div>
       </div>
+
     </div>
 
     <div class="footer">
@@ -252,29 +240,24 @@ petals.forEach(p=>{
   p.addEventListener("click",()=>{
     petals.forEach(x=>x.classList.remove("active"));
     p.classList.add("active");
-
     titel.textContent=p.textContent;
     links.innerHTML="";
-
     data[p.dataset.key].forEach(([t,u])=>{
       const d=document.createElement("div");
       d.className="link";
-      d.innerHTML=`${t}<a class="go" href="${u}" target="_blank">→</a>`;
+      d.innerHTML=`${t}<a class="go" href="${u}" target="_blank" rel="noopener">→</a>`;
       links.appendChild(d);
     });
   });
 });
 
-/* klik buiten panel sluit */
+/* sluiten = klik buiten bloem */
 document.getElementById("overlay").addEventListener("click",e=>{
-  if(!document.getElementById("panel").contains(e.target)){
-    closeAll();
+  const bloem=document.querySelector(".bloem-wrap");
+  if(!bloem.contains(e.target)){
+    document.getElementById("overlay").style.display="none";
   }
 });
-
-function closeAll(){
-  document.getElementById("overlay").style.display="none";
-}
 </script>
 
 </body>
