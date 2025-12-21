@@ -4,12 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Forum Knoppen</title>
-
 <style>
 body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif; }
 .action-buttons-container{ display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; padding:5px 0; }
-.button-group{ display:flex; align-items:center; gap:6px; }
-
+.button-group{ display:flex; align-items:center; gap:6px; position:relative; }
 .main-button{
   display:inline-block;
   background:#e8e0e0;
@@ -20,6 +18,11 @@ body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,
   font-size:11px;
   font-weight:600;
   border:2px solid #800000;
+  transition: all 0.2s ease;
+}
+.main-button:hover{
+  background:#800000;
+  color:#fff;
 }
 .help-trigger{
   display:flex; justify-content:center; align-items:center;
@@ -30,60 +33,82 @@ body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,
   font-size:12px; text-decoration:none;
 }
 
-/* overlay + iframe */
-#if-overlay{
-  position:fixed; inset:0;
-  background:rgba(255,255,255,.70);
-  backdrop-filter:blur(2px);
-  display:none; align-items:center; justify-content:center;
-  z-index:9999;
-}
-#if-shell{
-  width:min(980px,92vw);
-  height:min(760px,90vh);
-  background:transparent;
-  border-radius:18px;
-  box-shadow:0 20px 60px rgba(0,0,0,.18);
+/* INFOFRANKRIJK wrapper met submenu */
+.if-wrapper{
   position:relative;
-  overflow:hidden;
+  display:flex;
+  align-items:center;
+  gap:6px;
 }
-#if-close{
-  position:absolute; top:10px; right:10px;
-  width:34px; height:34px;
-  border-radius:999px;
-  border:2px solid rgba(128,0,0,.35);
-  background:rgba(255,255,255,.85);
-  color:#800000;
-  font-weight:700;
-  cursor:pointer;
-  line-height:30px;
-}
-#if-frame{ width:100%; height:100%; border:0; background:transparent; }
-</style>
 
+/* Submenu container */
+.if-submenu{
+  position:absolute;
+  top:100%;
+  left:0;
+  margin-top:4px;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-5px);
+  transition:all 0.25s ease;
+  z-index:100;
+}
+
+.if-wrapper:hover .if-submenu{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+
+/* Sub-knop styling */
+.sub-button{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  background:linear-gradient(135deg, #1a0505 0%, #400000 100%);
+  color:#fff;
+  padding:4px 10px;
+  border-radius:6px;
+  text-decoration:none;
+  font-size:10px;
+  font-weight:600;
+  border:1px solid #600000;
+  white-space:nowrap;
+  box-shadow:0 2px 8px rgba(0,0,0,0.3);
+  transition:all 0.2s ease;
+}
+.sub-button:hover{
+  background:linear-gradient(135deg, #400000 0%, #800000 100%);
+  transform:scale(1.02);
+  box-shadow:0 4px 12px rgba(128,0,0,0.4);
+}
+
+/* Galaxy icoon */
+.sub-button::before{
+  content:"🌌";
+  font-size:12px;
+}
+
+/* Pijltje indicator op hoofdknop */
+.has-submenu::after{
+  content:"▾";
+  margin-left:4px;
+  font-size:9px;
+  transition:transform 0.2s ease;
+}
+.if-wrapper:hover .has-submenu::after{
+  transform:rotate(180deg);
+}
+</style>
 <script>
 function openUitleg(url){
   window.open(url,'UitlegVenster','width=550,height=350,scrollbars=no,resizable=yes');
 }
-
-function openFlower(){
-  const ov=document.getElementById('if-overlay');
-  const fr=document.getElementById('if-frame');
-  fr.src='bloem.html';           // iframe-target in dezelfde repo
-  ov.style.display='flex';
-  document.body.style.overflow='hidden';
-}
-function closeFlower(){
-  const ov=document.getElementById('if-overlay');
-  const fr=document.getElementById('if-frame');
-  ov.style.display='none';
-  document.body.style.overflow='';
-  fr.src='about:blank';          // ontladen
-}
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeFlower(); });
 </script>
 </head>
-
 <body>
 <div class="action-buttons-container">
   <div class="button-group">
@@ -98,19 +123,20 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeFlower(); });
     <a href="https://www.nederlanders.fr/page/lift-en-transportcentrale" target="_blank" rel="noopener" class="main-button">VERVOERSHUB</a>
     <a href="javascript:void(0);" onclick="openUitleg('uitleg-vervoershub.html')" class="help-trigger">?</a>
   </div>
-  <!-- INFOFRANKRIJK (v2) -->
+  
+  <!-- INFOFRANKRIJK met submenu -->
   <div class="button-group">
-    <a href="https://www.infofrankrijk.com" class="main-button"
-       onclick="event.preventDefault(); openFlower();">INFOFRANKRIJK</a>
+    <div class="if-wrapper">
+      <a href="https://www.infofrankrijk.com" target="_blank" rel="noopener" class="main-button has-submenu">INFOFRANKRIJK</a>
+      
+      <!-- Uitklap submenu -->
+      <div class="if-submenu">
+        <a href="https://www.nederlanders.fr/galaxy-menu" target="_blank" rel="noopener" class="sub-button">
+          SNELMENU
+        </a>
+      </div>
+    </div>
     <a href="javascript:void(0);" onclick="openUitleg('uitleg-infofrankrijk.html')" class="help-trigger">?</a>
-  </div>
-</div>
-
-<!-- overlay -->
-<div id="if-overlay" onclick="if(event.target.id==='if-overlay'){ closeFlower(); }">
-  <div id="if-shell">
-    <button id="if-close" onclick="closeFlower()" aria-label="Sluiten">×</button>
-    <iframe id="if-frame" src="about:blank" title="Infofrankrijk bloem"></iframe>
   </div>
 </div>
 </body>
