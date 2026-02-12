@@ -14,7 +14,7 @@
             color: #333; 
             padding: 30px; 
             margin: 0; 
-            line-height: 1.8em; /* Conform design specs */
+            line-height: 1.8em; 
         }
         h2 { 
             font-family: 'Poppins', sans-serif; 
@@ -24,18 +24,9 @@
             border-bottom: 2px solid rgba(128, 0, 0, 0.1);
             padding-bottom: 10px;
         }
-        p { 
-            margin-bottom: 15px; 
-            font-size: 15px; 
-        }
-        ul {
-            margin-bottom: 25px;
-            padding-left: 20px;
-            font-size: 14px;
-        }
-        li {
-            margin-bottom: 8px;
-        }
+        p { margin-bottom: 15px; font-size: 15px; }
+        ul { margin-bottom: 25px; padding-left: 20px; font-size: 14px; }
+        li { margin-bottom: 8px; }
         .btn-container { 
             display: flex; 
             gap: 12px; 
@@ -44,7 +35,7 @@
         }
         .action-btn { 
             background-color: #800000; 
-            color: white; 
+            color: white !important; 
             border: none; 
             padding: 12px 20px; 
             border-radius: 4px; 
@@ -55,29 +46,27 @@
             font-weight: 600; 
             text-decoration: none; 
             display: inline-block; 
-            transition: background 0.3s ease;
-        }
-        .action-btn:hover { 
-            background-color: rgba(128, 0, 0, 0.8); 
         }
         .secondary-btn { 
             background-color: #f4f4f4; 
-            color: #333; 
+            color: #333 !important; 
             border: 1px solid #ddd; 
-        }
-        .secondary-btn:hover {
-            background-color: #e8e8e8;
         }
     </style>
     <script>
         function sluitVenster() {
             window.close();
         }
-        function gaEnSluit(url) {
-            if (window.opener) {
+
+        function gaNaarHub() {
+            const url = 'https://www.nederlanders.fr/page/lift-en-transportcentrale';
+            // Probeer het in het hoofdvenster te openen
+            if (window.opener && !window.opener.closed) {
                 window.opener.location.href = url;
+                window.opener.focus();
                 window.close();
             } else {
+                // Als er geen hoofdvenster is, open in nieuw tabblad
                 window.open(url, '_blank');
                 window.close();
             }
@@ -89,7 +78,7 @@
     
     <p>De Lift- en Transportcentrale op Nederlanders.fr is het centrale punt om ritten aan te bieden of te vragen tussen Nederland en Frankrijk.</p>
     
-    <p>Of het nu gaat om personenvervoer of goederenvervoer:</p>
+    <p>Of het nu gaat om personenvervoer of goederen:</p>
     
     <ul>
         <li><strong>Lift zoeken of aanbieden:</strong> Deel brandstofkosten en péage.</li>
@@ -98,7 +87,7 @@
     </ul>
 
     <div class="btn-container">
-        <button class="action-btn" onclick="gaEnSluit('https://www.nederlanders.fr/page/lift-en-transportcentrale')">Bekijk de Vervoershub</button>
+        <button class="action-btn" onclick="gaNaarHub()">Bekijk de Vervoershub</button>
         <button class="action-btn secondary-btn" onclick="sluitVenster()">Sluiten</button>
     </div>
 </body>
